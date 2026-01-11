@@ -1,8 +1,8 @@
  const brandData = {
-  Car:["Maruti","Hyundai","Tata","Mahindra","Honda"],
+  Car:["Maruti","Hyundai","Tata","Mahindra","Honda","skoda","Toyota","Ford","Volkswagen","Kia"],
   Bike:["Hero","Bajaj","TVS","Yamaha"],
   EV:["Tata EV","MG","Ola","Ather"],
-  Truck:["Tata","Ashok Leyland"],
+  Truck:["Tata","Ashok Leyland","Mahindra"],
   Tractor:["Mahindra","Sonalika"]
 };
 
