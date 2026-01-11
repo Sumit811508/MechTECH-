@@ -1,0 +1,393 @@
+ *{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Segoe UI",sans-serif;
+}
+
+html{
+  scroll-behavior: smooth;
+}
+
+body{
+  background:#f4f7fb;
+  color:#0f172a;
+  position:relative;
+}
+
+/* ================= NAVBAR ================= */
+.navbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 60px;
+  background:#ffffff;
+  box-shadow:0 8px 25px rgba(0,0,0,0.06);
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-size:26px;
+  font-weight:600;
+}
+
+.logo img{
+  height:42px;
+  width:auto;
+}
+
+.logo span{
+  color:#020617;
+}
+
+footer img{
+  height:36px;
+  margin-bottom:8px;
+}
+    
+
+/* ================= LOGO ================= */
+.logo{
+  font-size:34px;
+  color:#2563eb;
+}
+.logo span{color:#020617;}
+
+/* ================= NAV LINKS ================= */
+nav a{
+  margin-left:30px;
+  text-decoration:none;
+  color:#334155;
+  font-weight:500;
+}
+
+/* ================= HERO ================= */
+.hero{
+  position:relative;
+  height:90vh;
+  background:url("https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?auto=format&fit=crop&w=3840&q=80")
+  center/cover no-repeat;
+  display:flex;
+  align-items:center;
+  padding-left:80px;
+}
+
+.hero-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg,rgba(248,250,252,0.96),rgba(248,250,252,0.75));
+}
+
+.hero-content{
+  position:relative;
+  max-width:600px;
+  animation: heroFade 1.2s ease-out forwards;
+}
+
+@keyframes heroFade{
+  from{
+    opacity:0;
+    transform: translateY(30px);
+  }
+  to{
+    opacity:1;
+    transform: translateY(0);
+  }
+}
+
+.hero h2{
+  font-size:52px;
+  margin-bottom:20px;
+}
+
+.hero p{
+  font-size:18px;
+  color:#475569;
+  margin-bottom:30px;
+}
+
+.hero button{
+  padding:15px 34px;
+  background:#2563eb;
+  border:none;
+  color:white;
+  font-size:16px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+/* ================= SERVICES ================= */
+.services{
+  padding:90px 80px;
+  background:white;
+  text-align:center;
+  animation: sectionFade 0.9s ease forwards;
+}
+
+.subtitle{
+  margin:15px 0 50px;
+  color:#64748b;
+}
+
+.service-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:30px;
+}
+
+.service-card{
+  background:#f8fafc;
+  padding:35px 25px;
+  border-radius:18px;
+  transition: transform .35s ease, box-shadow .35s ease;
+}
+
+.service-card i{
+  font-size:34px;
+  color:#2563eb;
+  margin-bottom:15px;
+}
+
+.service-card:hover{
+  transform: translateY(-12px) scale(1.02);
+  box-shadow:0 30px 50px rgba(0,0,0,.12);
+}
+
+/* ================= BOOKING ================= */
+.booking{
+  padding:90px;
+  background:#eef2ff;
+  text-align:center;
+  animation: sectionFade 0.9s ease forwards;
+}
+
+.booking form{
+  max-width:520px;
+  margin:auto;
+  display:grid;
+  gap:18px;
+}
+
+.booking select,
+.booking button{
+  padding:15px;
+  border-radius:10px;
+  border:1px solid #c7d2fe;
+  font-size:15px;
+}
+
+.booking button{
+  background:#2563eb;
+  color:white;
+  border:none;
+}
+
+button:active{
+  transform: scale(0.97);
+}
+
+/* ================= ABOUT ================= */
+.about{
+  padding:90px 80px;
+  background:white;
+  text-align:center;
+  animation: sectionFade 0.9s ease forwards;
+}
+
+.about p{
+  max-width:750px;
+  margin:auto;
+  color:#475569;
+  font-size:17px;
+}
+
+/* ================= GARAGES ================= */
+.garages{
+  padding:60px 80px;
+  background:#f4f7fb;
+  text-align:center;
+  animation: sectionFade 0.9s ease forwards;
+}
+
+.garages h2{
+  margin-bottom:40px;
+}
+
+.garage-list{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:30px;
+}
+
+.garage-card{
+  background:#fff;
+  padding:25px;
+  border-radius:18px;
+  box-shadow:0 15px 25px rgba(0,0,0,0.08);
+}
+
+/* ================= TRUST ================= */
+.trust{
+  padding:90px 80px;
+  background:#ffffff;
+  text-align:center;
+  animation: sectionFade 0.9s ease forwards;
+}
+
+.trust h2{
+  margin-bottom:50px;
+}
+
+.trust-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:30px;
+}
+
+.trust-card{
+  background:#f8fafc;
+  padding:30px 25px;
+  border-radius:18px;
+  box-shadow:0 15px 25px rgba(0,0,0,0.08);
+}
+
+.trust-card h3{
+  color:#2563eb;
+  margin-bottom:10px;
+}
+
+.trust-card p{
+  color:#475569;
+  font-size:15px;
+}
+
+/* ================= EMERGENCY BUTTON ================= */
+.emergency-box{
+  position: relative;
+  margin: 60px auto;
+
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  background: #fee2e2;
+  border: 2px solid #fecaca;
+  padding: 18px 26px;
+  border-radius: 18px;
+  max-width: 420px;
+  width: calc(100% - 40px);
+  cursor: pointer;
+
+  animation: softPulse 3s ease-in-out infinite;
+}
+
+@keyframes softPulse{
+  0%{
+    box-shadow: 0 0 0 0 rgba(220,38,38,0.3);
+  }
+  70%{
+    box-shadow: 0 0 0 10px rgba(220,38,38,0);
+  }
+  100%{
+    box-shadow: 0 0 0 0 rgba(220,38,38,0);
+  }
+}
+
+.emergency-box:hover{
+  background:#fecaca;
+}
+
+/* ================= FOOTER ================= */
+footer{
+  background:#020617;
+  color:#e5e7eb;
+  padding:20px;
+  text-align:center;
+}
+
+/* ================= LOGIN MODAL ================= */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(2,6,23,0.6);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:999;
+}
+
+.modal-content{
+  background:#ffffff;
+  padding:40px;
+  width:360px;
+  border-radius:18px;
+  text-align:center;
+  position:relative;
+  box-shadow:0 30px 70px rgba(0,0,0,0.25);
+  animation: modalPop 0.4s ease;
+}
+
+@keyframes modalPop{
+  from{
+    opacity:0;
+    transform: scale(0.9);
+  }
+  to{
+    opacity:1;
+    transform: scale(1);
+  }
+}
+
+.modal-content h2{
+  margin-bottom:10px;
+  color:#020617;
+}
+
+.modal-content p{
+  font-size:14px;
+  color:#64748b;
+  margin-bottom:25px;
+}
+
+.modal-content input{
+  width:100%;
+  padding:14px;
+  margin-bottom:15px;
+  border-radius:10px;
+  border:1px solid #c7d2fe;
+  font-size:14px;
+}
+
+.modal-content button{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:10px;
+  background:#2563eb;
+  color:white;
+  font-size:15px;
+  cursor:pointer;
+}
+
+.close-btn{
+  position:absolute;
+  top:15px;
+  right:18px;
+  font-size:24px;
+  cursor:pointer;
+  color:#64748b;
+}
+
+/* ================= COMMON ANIMATION ================= */
+@keyframes sectionFade{
+  from{
+    opacity:0;
+    transform: translateY(20px);
+  }
+  to{
+    opacity:1;
+    transform: translateY(0);
+  }
+}

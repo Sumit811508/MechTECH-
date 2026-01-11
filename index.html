@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MECHTech</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <div class="logo">
+    <img src="assets/mechtech-logo.png" alt="MECHTech Logo">
+    <span>MECHTech</span>
+  </div>
+
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Services</a>
+    <a href="#">Booking</a>
+    <a href="#">About</a>
+    <a href="#" onclick="scrollToBook()">Login</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h2>On-Road Vehicle Assistance</h2>
+    <p>
+      Breakdown? Flat tyre? Battery issue?  
+      MECHTech connects you with nearby mechanics instantly.
+    </p>
+    <button onclick="scrollToBook()">Book Service</button>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services">
+  <h2>Our Services</h2>
+  <p class="subtitle">Fast • Reliable • Professional</p>
+
+  <div class="service-grid">
+    <div class="service-card">
+      <i class="fa-solid fa-car-burst"></i>
+      <h3>Breakdown Repair</h3>
+    </div>
+
+    <div class="service-card">
+      <i class="fa-solid fa-car-battery"></i>
+      <h3>Battery Jumpstart</h3>
+    </div>
+
+    <div class="service-card">
+      <i class="fa-solid fa-truck"></i>
+      <h3>Towing Service</h3>
+    </div>
+
+    <div class="service-card">
+      <i class="fa-solid fa-gas-pump"></i>
+      <h3>Fuel Delivery</h3>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section id="book" class="booking">
+  <h2>Book a Service</h2>
+
+  <form id="bookingForm">
+    <select id="vehicleType" required>
+      <option value="">Vehicle Type</option>
+      <option value="Car">Car</option>
+      <option value="Bike">Bike</option>
+      <option value="EV">EV</option>
+      <option value="Truck">Truck</option>
+      <option value="Tractor">Tractor</option>
+    </select>
+
+    <select id="brand" required>
+      <option value="">Brand</option>
+    </select>
+
+    <select id="model" required>
+      <option value="">Model</option>
+    </select>
+
+    <button type="submit">Confirm Booking</button>
+  </form>
+</section>
+
+<!-- TRUST -->
+<section class="trust">
+  <h2>Why Choose MECHTech?</h2>
+
+  <div class="trust-grid">
+    <div class="trust-card">
+      <h3>✔ Verified Mechanics</h3>
+      <p>All service partners are background verified.</p>
+    </div>
+    <div class="trust-card">
+      <h3>✔ 24×7 Emergency Support</h3>
+      <p>Help is always available when you need it.</p>
+    </div>
+    <div class="trust-card">
+      <h3>✔ Transparent Pricing</h3>
+      <p>No hidden charges or surprises.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EMERGENCY BUTTON -->
+<div class="emergency-box">
+  <i class="fa-solid fa-truck-fast"></i>
+  <div>
+    <h3>Emergency Help</h3>
+    <p>Tap for instant towing & roadside support</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <img src="assets/mechtech-logo.png" alt="MECHTech Logo">
+  <p>© 2026 MECHTech. All rights reserved.</p>
+</footer>
+
+<!-- LOGIN MODAL -->
+<div class="modal" id="loginModal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeLogin()">×</span>
+    <h2>Login</h2>
+    <input id="loginEmail" type="email" placeholder="Email">
+    <input id="loginPassword" type="password" placeholder="Password">
+    <button onclick="loginUser()">Login</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
