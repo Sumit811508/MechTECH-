@@ -91,23 +91,81 @@ document.getElementById("bookingForm").addEventListener("submit", e => {
 });
 
 /* LOGIN & SCROLL */
+let isSignUp = false;
+
 function scrollToBook(){
   document.getElementById("loginModal").style.display = "flex";
+  isSignUp = false;
+  showLoginMode();
 }
 
 function closeLogin(){
   document.getElementById("loginModal").style.display = "none";
+  isSignUp = false;
+  showLoginMode();
+}
+
+function toggleSignUp(){
+  isSignUp = !isSignUp;
+  if(isSignUp){
+    showSignUpMode();
+  } else {
+    showLoginMode();
+  }
+}
+
+function showLoginMode(){
+  document.getElementById("modalTitle").innerText = "Login";
+  document.getElementById("loginName").style.display = "none";
+  document.getElementById("loginConfirmPassword").style.display = "none";
+  document.getElementById("submitBtn").innerText = "Login";
+  document.getElementById("submitBtn").onclick = loginUser;
+  document.getElementById("toggleText").innerHTML = "Don't have an account? <span onclick=\"toggleSignUp()\" style=\"color:#2563eb; cursor:pointer; font-weight:600;\">Sign Up</span>";
+}
+
+function showSignUpMode(){
+  document.getElementById("modalTitle").innerText = "Sign Up";
+  document.getElementById("loginName").style.display = "block";
+  document.getElementById("loginConfirmPassword").style.display = "block";
+  document.getElementById("submitBtn").innerText = "Sign Up";
+  document.getElementById("submitBtn").onclick = signUpUser;
+  document.getElementById("toggleText").innerHTML = "Already have an account? <span onclick=\"toggleSignUp()\" style=\"color:#2563eb; cursor:pointer; font-weight:600;\">Login</span>";
 }
 
 function loginUser(){
   const email = document.getElementById("loginEmail").value;
-  const pass = document.getElementById("loginPassword").value;
+  const password = document.getElementById("loginPassword").value;
 
-  if(email && pass){
-    closeLogin();
-    document.getElementById("book").scrollIntoView({ behavior:"smooth" });
-  } else {
-    alert("Please enter valid login details");
+  if(!email || !password){
+    alert("Please fill in all fields!");
+    return;
   }
+
+  alert(`Welcome back! 🎉\nLogged in with: ${email}`);
+  closeLogin();
+  // Reset form
+  document.getElementById("loginEmail").value = "";
+  document.getElementById("loginPassword").value = "";
 }
-/* END LOGIN & SCROLL */
+
+/* SCROLL FUNCTIONS */
+function scrollToHome(){
+  document.getElementById("home").scrollIntoView({ behavior: "smooth" });
+}
+
+function scrollToServices(){
+  document.getElementById("services").scrollIntoView({ behavior: "smooth" });
+}
+
+function scrollToBooking(){
+  document.getElementById("book").scrollIntoView({ behavior: "smooth" });
+}
+
+function scrollToAbout(){
+  document.getElementById("about").scrollIntoView({ behavior: "smooth" });
+}
+
+function scrollToLogin(){
+  scrollToBook();
+}
+/* END SCROLL FUNCTIONS */

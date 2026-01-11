@@ -21,16 +21,16 @@
   </div>
 
   <nav>
-    <a href="#">Home</a>
-    <a href="#">Services</a>
-    <a href="#">Booking</a>
-    <a href="#">About</a>
-    <a href="#" onclick="scrollToBook()">Login</a>
+    <a href="#" onclick="scrollToHome()">Home</a>
+    <a href="#" onclick="scrollToServices()">Services</a>
+    <a href="#" onclick="scrollToBooking()">Booking</a>
+    <a href="#" onclick="scrollToAbout()">About</a>
+    <a href="#" onclick="scrollToLogin()">Login</a>
   </nav>
 </header>
 
 <!-- HERO -->
-<section class="hero">
+<section id="home" class="hero">
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <h2>On-Road Vehicle Assistance</h2>
@@ -43,7 +43,7 @@
 </section>
 
 <!-- SERVICES -->
-<section class="services">
+<section id="services" class="services">
   <h2>Our Services</h2>
   <p class="subtitle">Fast • Reliable • Professional</p>
 
@@ -61,11 +61,6 @@
     <div class="service-card">
       <i class="fa-solid fa-truck"></i>
       <h3>Towing Service</h3>
-    </div>
-
-    <div class="service-card">
-      <i class="fa-solid fa-gas-pump"></i>
-      <h3>Fuel Delivery</h3>
     </div>
   </div>
 </section>
@@ -101,7 +96,7 @@
 </section>
 
 <!-- TRUST -->
-<section class="trust">
+<section id="about" class="trust">
   <h2>Why to Choose MECHTech?</h2>
 
   <div class="trust-grid">
@@ -142,12 +137,17 @@
 <div class="modal" id="loginModal">
   <div class="modal-content">
     <span class="close-btn" onclick="closeLogin()">×</span>
-    <h2>Login</h2>
+    <h2 id="modalTitle">Login</h2>
     
     <input id="loginEmail" type="email" placeholder="Email">
     
     <input id="loginPassword" type="password" placeholder="Password">
-    <button onclick="loginUser()">Login</button>
+    <input id="loginConfirmPassword" type="password" placeholder="Confirm Password" style="display:none;">
+    <input id="loginName" type="text" placeholder="Full Name" style="display:none;">
+    
+    <button id="submitBtn" onclick="loginUser()">Login</button>
+    
+    <p id="toggleText" class="toggle-text">Don't have an account? <span onclick="toggleSignUp()" style="color:#2563eb; cursor:pointer; font-weight:600;">Sign Up</span></p>
   </div>
 </div>
 
