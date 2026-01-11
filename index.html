@@ -75,21 +75,25 @@
   <h2>Book a Service</h2>
 
   <form id="bookingForm">
-    <select id="vehicleType" required>
+    <select id="vehicleType" required >
       <option value="" hidden>Vehicle Type</option>
       <option value="Car">Car</option>
+      <option value="HybridCar" >Hybrid Car</option>
       <option value="Bike">Bike</option>
-      <option value="EV">EV</option>
+      <option value="CarEV">CarEV</option>
+      <option value="BikeEV">BikeEV</option>
       <option value="Truck">Truck</option>
       <option value="Tractor">Tractor</option>
     </select>
 
     <select id="brand" required>
-      <option value="">Brand</option>
+      <option value="" >Brand</option>
+
     </select>
 
     <select id="model" required>
-      <option value="">Model</option>
+      <option value="" >Model</option>
+
     </select>
 
     <button type="submit">Confirm Booking</button>
@@ -98,7 +102,7 @@
 
 <!-- TRUST -->
 <section class="trust">
-  <h2>Why Choose MECHTech?</h2>
+  <h2>Why to Choose MECHTech?</h2>
 
   <div class="trust-grid">
     <div class="trust-card">
@@ -113,6 +117,9 @@
       <h3>✔ Transparent Pricing</h3>
       <p>No hidden charges or surprises.</p>
     </div>
+    <div class="trust-card">
+      <h3>✔ Real-Time Tracking</h3>
+      <p>Track your mechanic's arrival in real-time.</p>
   </div>
 </section>
 
@@ -136,7 +143,9 @@
   <div class="modal-content">
     <span class="close-btn" onclick="closeLogin()">×</span>
     <h2>Login</h2>
+    
     <input id="loginEmail" type="email" placeholder="Email">
+    
     <input id="loginPassword" type="password" placeholder="Password">
     <button onclick="loginUser()">Login</button>
   </div>
