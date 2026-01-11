@@ -22,21 +22,25 @@ body{
   align-items:center;
   padding:18px 60px;
   background:#ffffff;
-  box-shadow:0 8px 25px rgba(0,0,0,0.06);
+  box-shadow:0 8px 25px rgba(63, 54, 35, 0.06);
 }
 
 .logo{
   display:flex;
   align-items:center;
   gap:12px;
-  font-size:26px;
+  font: size 50px;
+  
   font-weight:600;
  
 }
 
 .logo img{
-  height:42px;
-  width:auto;
+
+  height:150px;
+  width: 150px;
+  align-self:middle;
+  
 }
 
 .logo span{
@@ -53,7 +57,7 @@ footer img{
 /* ================= LOGO ================= */
 .logo{
   font-size:34px;
-  color:#2563eb;
+  color:#e7ab3b;
 }
 .logo span{color:#020617;}
 
