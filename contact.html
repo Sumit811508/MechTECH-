@@ -26,16 +26,32 @@
   </nav>
 </header>
 
-<main style="padding:90px 80px;">
+<main style="padding:90px 60px;">
   <h2>Contact Us</h2>
   <p class="subtitle">Questions? Feedback? We're here to help.</p>
 
-  <form id="contactForm" style="max-width:640px;margin:auto;display:grid;gap:12px;">
-    <input id="contactName" type="text" placeholder="Full name" required>
-    <input id="contactEmail" type="email" placeholder="Email" required>
-    <textarea id="contactMessage" rows="6" placeholder="Your message" required></textarea>
-    <button type="submit">Send Message</button>
-  </form>
+  <div class="contact-grid">
+    <div class="contact-card">
+      <h3>We're here to help</h3>
+      <p>Reach out for support, partnership, or media inquiries. Our team typically responds within 24 hours.</p>
+
+      <ul style="margin-top:18px;list-style:none;padding:0;color:#5b3a2a;">
+        <li><strong>Email:</strong> support@mechtech.example</li>
+        <li style="margin-top:8px;"><strong>Phone:</strong> +1 555 123 456</li>
+        <li style="margin-top:8px;"><strong>Office:</strong> 123 Mech St, Industrial Park</li>
+      </ul>
+    </div>
+
+    <div class="contact-card contact-form">
+      <form id="contactForm" class="contact-form" style="display:grid;gap:12px;">
+        <input id="contactName" type="text" placeholder="Full name" required>
+        <input id="contactEmail" type="email" placeholder="Email" required>
+        <textarea id="contactMessage" rows="6" placeholder="Your message" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+  </div>
+
 </main>
 
 <footer>
