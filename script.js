@@ -97,47 +97,75 @@ if(bookingForm){
     e.preventDefault();
     const formData = new FormData(bookingForm);
     const payload = Object.fromEntries(formData.entries());
-    // Try backend POST to Django API
+    clearFieldErrors(bookingForm);
+    const submitBtn = bookingForm.querySelector('button[type="submit"]');
+    const origText = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = 'Sending…';
+    showToast('info','Submitting booking...');
     try{
       const res = await fetch('/api/booking/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
       });
+      const data = await res.json().catch(()=>({}));
       if(res.ok){
-        const data = await res.json();
-        alert('Booking submitted! Reference: ' + (data.id || 'n/a'));
+        showToast('success','Booking submitted! Reference: ' + (data.id || 'n/a'));
+        showInlineSuccess(bookingForm, 'Booking submitted — ref: ' + (data.id || 'n/a'));
         bookingForm.reset();
+        submitBtn.disabled = false; submitBtn.innerHTML = origText;
         return;
+      }
+      if(data && data.error === 'validation' && data.fields){
+        showFieldErrors(bookingForm, data.fields);
+        showToast('error','Please fix form errors.');
+      } else if(data && data.error === 'rate_limited'){
+        showToast('error','Too many requests — please wait.');
+      } else {
+        showToast('error','Submission failed.');
       }
     }catch(err){
       console.warn('Backend booking submit failed', err);
+      showToast('error','Network error — could not submit booking.');
+    } finally{
+      submitBtn.disabled = false; submitBtn.innerHTML = origText;
     }
-
-    alert('Booking data ready for backend integration 🚀');
-    bookingForm.reset();
   });
 }
 
 if(contactForm){
   contactForm.addEventListener('submit', async e => {
     e.preventDefault();
+    clearFieldErrors(contactForm);
+    const submitBtn = contactForm.querySelector('button[type="submit"]');
+    const origText = submitBtn.innerHTML;
+    submitBtn.disabled = true; submitBtn.innerHTML = 'Sending…';
+    showToast('info','Sending message...');
     const formData = new FormData(contactForm);
     const payload = Object.fromEntries(formData.entries());
     try{
-      const res = await fetch('/api/contact/', {
-        method: 'POST', headers: { 'Content-Type':'application/json' }, body: JSON.stringify(payload)
-      });
+      const res = await fetch('/api/contact/', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload) });
+      const data = await res.json().catch(()=>({}));
       if(res.ok){
-        alert('Thanks! We received your message.');
+        showToast('success','Thanks — we received your message.');
+        showInlineSuccess(contactForm,'Message sent — we will reply shortly.');
         contactForm.reset();
+        submitBtn.disabled = false; submitBtn.innerHTML = origText;
         return;
       }
-    }catch(err){ console.warn('Contact submit failed', err); }
-
-    const name = el('contactName')?.value || 'Guest';
-    alert(`Thanks ${name}! We received your message.`);
-    contactForm.reset();
+      if(data && data.error === 'validation' && data.fields){
+        showFieldErrors(contactForm, data.fields);
+        showToast('error','Please fix the form errors.');
+      } else if(data && data.error === 'rate_limited'){
+        showToast('error','Too many requests — please wait.');
+      } else {
+        showToast('error','Submission failed.');
+      }
+    }catch(err){
+      console.warn('Contact submit failed', err);
+      showToast('error','Network error — could not send message.');
+    } finally{
+      submitBtn.disabled = false; submitBtn.innerHTML = origText;
+    }
   });
 }
 
@@ -261,5 +289,4 @@ window.initWidgets = function(){
   // re-run any initialization logic that depends on DOM presence
   // e.g., re-bind forms
 };
-});
 
