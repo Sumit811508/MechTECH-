@@ -374,5 +374,43 @@ async function navigateTo(href, opts={replace:false}){
   }catch(err){ console.error('navigate error', err); window.location.href = href; }
 }
 
-// initWidgets is defined earlier and will be called after SPA navigation
+// ============ TOAST NOTIFICATIONS ============
+function showToast(type = 'info', message = '', duration = 3000) {
+  let toast = document.querySelector('.site-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.className = 'site-toast';
+    document.body.appendChild(toast);
+  }
+  toast.setAttribute('data-type', type);
+  toast.textContent = message;
+  toast.style.opacity = '1';
+  
+  setTimeout(() => {
+    toast.style.opacity = '0';
+  }, duration);
+}
 
+// ============ FORM HELPERS ============
+function showFieldErrors(form, fields) {
+  Object.entries(fields).forEach(([fieldName, error]) => {
+    const errorEl = form.querySelector(`[data-for="${fieldName}"]`);
+    if (errorEl) errorEl.textContent = error;
+  });
+}
+
+function clearFieldErrors(form) {
+  form.querySelectorAll('.field-error').forEach(el => el.textContent = '');
+}
+
+function showInlineSuccess(form, message) {
+  let success = form.querySelector('.inline-success');
+  if (!success) {
+    success = document.createElement('div');
+    success.className = 'inline-success';
+    form.appendChild(success);
+  }
+  success.textContent = message;
+}
+
+// initWidgets is defined earlier and will be called after SPA navigation

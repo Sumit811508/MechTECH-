@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Location Permission - MECHTech</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo">
+    <img src="new_logo1.png" alt="mechtech logo">
+    <span>MECHTech</span>
+  </div>
+  <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+  <nav class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="location-permission.html">Nearby</a>
+    <a href="index.html#login">Login</a>
+  </nav>
+</header>
+
+<main class="location-permission-page">
+  <div class="permission-card">
+    <div class="permission-icon">
+      <i class="fa-solid fa-location-dot"></i>
+    </div>
+    <h2>Enable Location Access</h2>
+    <p>MECHTech needs your location to find nearby garages and mechanics.</p>
+    <p class="permission-info">We use this to show you the closest service providers and route mechanics to you quickly.</p>
+    
+    <div class="permission-buttons">
+      <button class="btn btn-primary" onclick="requestLocationPermission()">
+        <i class="fa-solid fa-location-crosshairs"></i> Allow Location
+      </button>
+      <button class="btn btn-outline" onclick="skipLocation()">
+        <i class="fa-solid fa-xmark"></i> Skip for Now
+      </button>
+    </div>
+
+    <div id="locationStatus" class="location-status"></div>
+  </div>
+</main>
+
+<footer>
+  <img src="new_logo1.png" alt="MECHTech Logo" style="height:36px;">
+  <p>© 2026 MECHTech. All rights reserved.</p>
+</footer>
+
+<script src="script.js"></script>
+<script>
+  function requestLocationPermission() {
+    const statusDiv = document.getElementById('locationStatus');
+    
+    if ('geolocation' in navigator) {
+      statusDiv.innerHTML = '<p class="status-info"><i class="fa-solid fa-hourglass-end"></i> Getting your location...</p>';
+      
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          localStorage.setItem('userLat', latitude);
+          localStorage.setItem('userLng', longitude);
+          statusDiv.innerHTML = '<p class="status-success"><i class="fa-solid fa-check-circle"></i> Location found!</p>';
+          setTimeout(() => window.location.href = 'nearby-garages.html', 1500);
+        },
+        (error) => {
+          statusDiv.innerHTML = '<p class="status-error"><i class="fa-solid fa-exclamation-circle"></i> ' + error.message + '</p>';
+        }
+      );
+    } else {
+      statusDiv.innerHTML = '<p class="status-error"><i class="fa-solid fa-exclamation-circle"></i> Geolocation not supported</p>';
+    }
+  }
+
+  function skipLocation() {
+    // Set default location (city center) if user skips
+    localStorage.setItem('userLat', '28.6139');
+    localStorage.setItem('userLng', '77.2090');
+    window.location.href = 'nearby-garages.html';
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Garage Details - MECHTech</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo">
+    <img src="new_logo1.png" alt="mechtech logo">
+    <span>MECHTech</span>
+  </div>
+  <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+  <nav class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="nearby-garages.html">Back to List</a>
+    <a href="index.html#login">Login</a>
+  </nav>
+</header>
+
+<main class="garage-detail-page">
+  <div class="container">
+    <div id="garageContent"></div>
+  </div>
+</main>
+
+<footer>
+  <img src="new_logo1.png" alt="MECHTech Logo" style="height:36px;">
+  <p>© 2026 MECHTech. All rights reserved.</p>
+</footer>
+
+<script src="script.js"></script>
+<script>
+  const garageDetails = {
+    1: {
+      name: 'Quick Fix Garage',
+      rating: 4.8,
+      reviews: 342,
+      distance: '0.5 km',
+      address: '123 Main Street, New Delhi',
+      phone: '+91-9876543210',
+      hours: 'Mon-Sun: 6:00 AM - 11:00 PM',
+      availability: 'Open Now',
+      description: 'Fast and reliable breakdown repair service. Experienced mechanics with 15+ years in the industry.',
+      services: [
+        { name: 'Breakdown Repair', price: '₹500 - ₹2000' },
+        { name: 'Battery Jumpstart', price: '₹300' },
+        { name: 'Towing', price: '₹1000 - ₹2000' },
+        { name: 'Maintenance', price: '₹400 - ₹1500' }
+      ],
+      image: 'https://via.placeholder.com/600x300?text=Quick+Fix+Garage',
+      mechanics: [
+        { name: 'Rajesh Kumar', exp: '15 years', rating: 4.9 },
+        { name: 'Amit Singh', exp: '10 years', rating: 4.7 }
+      ]
+    },
+    2: {
+      name: 'Elite Motors',
+      rating: 4.6,
+      reviews: 218,
+      distance: '1.2 km',
+      address: '456 Park Avenue, New Delhi',
+      phone: '+91-9876543211',
+      hours: 'Mon-Sun: 7:00 AM - 10:00 PM',
+      availability: 'Open Now',
+      description: 'Premium automotive repair and maintenance service with certified technicians.',
+      services: [
+        { name: 'Breakdown Repair', price: '₹600 - ₹2500' },
+        { name: 'Towing', price: '₹1200 - ₹2500' },
+        { name: 'Maintenance', price: '₹500 - ₹2000' },
+        { name: 'Diagnostics', price: '₹800' }
+      ],
+      image: 'https://via.placeholder.com/600x300?text=Elite+Motors',
+      mechanics: [
+        { name: 'Vikram Patel', exp: '12 years', rating: 4.8 },
+        { name: 'Priya Sharma', exp: '8 years', rating: 4.6 }
+      ]
+    }
+  };
+
+  function loadGarageDetail() {
+    const garageId = parseInt(localStorage.getItem('selectedGarageId')) || 1;
+    const garage = garageDetails[garageId] || garageDetails[1];
+    const content = document.getElementById('garageContent');
+
+    content.innerHTML = `
+      <div class="detail-header">
+        <img src="${garage.image}" alt="${garage.name}" class="detail-image">
+        <div class="detail-title">
+          <h1>${garage.name}</h1>
+          <div class="rating-large">
+            <i class="fa-solid fa-star"></i> ${garage.rating} 
+            <span>(${garage.reviews} reviews)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail-info">
+        <div class="info-card">
+          <i class="fa-solid fa-map-pin"></i>
+          <div>
+            <h3>Location</h3>
+            <p>${garage.address}</p>
+            <p>${garage.distance} away</p>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <i class="fa-solid fa-clock"></i>
+          <div>
+            <h3>Hours</h3>
+            <p>${garage.hours}</p>
+            <p class="status-open">${garage.availability}</p>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <i class="fa-solid fa-phone"></i>
+          <div>
+            <h3>Contact</h3>
+            <p>${garage.phone}</p>
+            <button class="btn btn-primary" onclick="window.location.href='tel:${garage.phone}'">
+              <i class="fa-solid fa-phone"></i> Call Now
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>About</h2>
+        <p>${garage.description}</p>
+      </div>
+
+      <div class="section">
+        <h2>Services & Pricing</h2>
+        <div class="services-list">
+          ${garage.services.map(s => `
+            <div class="service-item">
+              <h3>${s.name}</h3>
+              <p class="price">${s.price}</p>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Expert Mechanics</h2>
+        <div class="mechanics-list">
+          ${garage.mechanics.map(m => `
+            <div class="mechanic-card">
+              <div class="mechanic-avatar">
+                <i class="fa-solid fa-user"></i>
+              </div>
+              <div>
+                <h3>${m.name}</h3>
+                <p>${m.exp}</p>
+                <div class="rating"><i class="fa-solid fa-star"></i> ${m.rating}</div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button class="btn btn-primary" onclick="window.location.href='request-service.html'">
+          <i class="fa-solid fa-wrench"></i> Request Service
+        </button>
+        <button class="btn btn-outline" onclick="startTracking()">
+          <i class="fa-solid fa-location-dot"></i> Live Tracking
+        </button>
+      </div>
+    `;
+  }
+
+  function startTracking() {
+    window.location.href = 'live-tracking.html';
+  }
+
+  document.addEventListener('DOMContentLoaded', loadGarageDetail);
+</script>
+</body>
+</html>
