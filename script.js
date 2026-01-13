@@ -64,109 +64,202 @@ const modelData = {
    Sonalika:["Sultan RX","Tiger DI","Powertrac Euro 50",],
  };
 
-const vehicleType = document.getElementById("vehicleType");
-const brand = document.getElementById("brand");
-const model = document.getElementById("model");
+// --- UI data ---
 
-vehicleType.addEventListener("change", () => {
-  brand.innerHTML = "<option value=''>Brand</option>";
-  model.innerHTML = "<option value=''>Model</option>";
+// (brandData and modelData unchanged)
 
-  (brandData[vehicleType.value] || []).forEach(b => {
-    brand.innerHTML += `<option>${b}</option>`;
+// --- Helpers ---
+function el(id){ return document.getElementById(id); }
+
+// Only attach behaviors if elements exist on the page
+const vehicleType = el('vehicleType');
+const brand = el('brand');
+const model = el('model');
+const bookingForm = el('bookingForm');
+const loginModal = el('loginModal');
+const contactForm = el('contactForm');
+
+if(vehicleType && brand){
+  vehicleType.addEventListener('change', () => {
+    brand.innerHTML = "<option value=''>Brand</option>";
+    model && (model.innerHTML = "<option value=''>Model</option>");
+    (brandData[vehicleType.value] || []).forEach(b => brand.innerHTML += `<option>${b}</option>`);
   });
-});
 
-brand.addEventListener("change", () => {
-  model.innerHTML = "<option value=''>Model</option>";
-
-  (modelData[brand.value] || []).forEach(m => {
-    model.innerHTML += `<option>${m}</option>`;
+  brand.addEventListener('change', () => {
+    model && (model.innerHTML = "<option value=''>Model</option>");
+    (modelData[brand.value] || []).forEach(m => model && (model.innerHTML += `<option>${m}</option>`));
   });
-});
+}
 
-document.getElementById("bookingForm").addEventListener("submit", e => {
-  e.preventDefault();
-  alert("Booking data ready for backend integration 🚀");
-});
+if(bookingForm){
+  bookingForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    const formData = new FormData(bookingForm);
+    const payload = Object.fromEntries(formData.entries());
+    // Try backend POST to Django API
+    try{
+      const res = await fetch('/api/booking/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if(res.ok){
+        const data = await res.json();
+        alert('Booking submitted! Reference: ' + (data.id || 'n/a'));
+        bookingForm.reset();
+        return;
+      }
+    }catch(err){
+      console.warn('Backend booking submit failed', err);
+    }
 
-/* LOGIN & SCROLL */
+    alert('Booking data ready for backend integration 🚀');
+    bookingForm.reset();
+  });
+}
+
+if(contactForm){
+  contactForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    const formData = new FormData(contactForm);
+    const payload = Object.fromEntries(formData.entries());
+    try{
+      const res = await fetch('/api/contact/', {
+        method: 'POST', headers: { 'Content-Type':'application/json' }, body: JSON.stringify(payload)
+      });
+      if(res.ok){
+        alert('Thanks! We received your message.');
+        contactForm.reset();
+        return;
+      }
+    }catch(err){ console.warn('Contact submit failed', err); }
+
+    const name = el('contactName')?.value || 'Guest';
+    alert(`Thanks ${name}! We received your message.`);
+    contactForm.reset();
+  });
+}
+
+// Login modal helpers (only when modal exists)
 let isSignUp = false;
-
-function scrollToBook(){
-  document.getElementById("loginModal").style.display = "flex";
-  isSignUp = false;
-  showLoginMode();
-}
-
-function closeLogin(){
-  document.getElementById("loginModal").style.display = "none";
-  isSignUp = false;
-  showLoginMode();
-}
-
-function toggleSignUp(){
-  isSignUp = !isSignUp;
+function openLogin(){ if(loginModal) loginModal.style.display = 'flex'; }
+function closeLogin(){ if(loginModal) loginModal.style.display = 'none'; }
+function toggleSignUp(){ isSignUp = !isSignUp; showMode(); }
+function showMode(){
+  if(!loginModal) return;
+  const title = el('modalTitle');
+  const name = el('loginName');
+  const conf = el('loginConfirmPassword');
+  const submit = el('submitBtn');
+  const toggleText = el('toggleText');
   if(isSignUp){
-    showSignUpMode();
+    title.innerText = 'Sign Up';
+    name.style.display = 'block';
+    conf.style.display = 'block';
+    submit.innerText = 'Sign Up';
+    submit.onclick = signUpUser;
+    toggleText.innerHTML = 'Already have an account? <span onclick="toggleSignUp()" style="color:#2563eb; cursor:pointer; font-weight:600;">Login</span>';
   } else {
-    showLoginMode();
+    title.innerText = 'Login';
+    name.style.display = 'none';
+    conf.style.display = 'none';
+    submit.innerText = 'Login';
+    submit.onclick = loginUser;
+    toggleText.innerHTML = 'Don\'t have an account? <span onclick="toggleSignUp()" style="color:#2563eb; cursor:pointer; font-weight:600;">Sign Up</span>';
   }
-}
-
-function showLoginMode(){
-  document.getElementById("modalTitle").innerText = "Login";
-  document.getElementById("loginName").style.display = "none";
-  document.getElementById("loginConfirmPassword").style.display = "none";
-  document.getElementById("submitBtn").innerText = "Login";
-  document.getElementById("submitBtn").onclick = loginUser;
-  document.getElementById("toggleText").innerHTML = "Don't have an account? <span onclick=\"toggleSignUp()\" style=\"color:#2563eb; cursor:pointer; font-weight:600;\">Sign Up</span>";
-}
-
-function showSignUpMode(){
-  document.getElementById("modalTitle").innerText = "Sign Up";
-  document.getElementById("loginName").style.display = "block";
-  document.getElementById("loginConfirmPassword").style.display = "block";
-  document.getElementById("submitBtn").innerText = "Sign Up";
-  document.getElementById("submitBtn").onclick = signUpUser;
-  document.getElementById("toggleText").innerHTML = "Already have an account? <span onclick=\"toggleSignUp()\" style=\"color:#2563eb; cursor:pointer; font-weight:600;\">Login</span>";
 }
 
 function loginUser(){
-  const email = document.getElementById("loginEmail").value;
-  const password = document.getElementById("loginPassword").value;
-
-  if(!email || !password){
-    alert("Please fill in all fields!");
-    return;
-  }
-
+  const email = el('loginEmail')?.value || '';
+  const password = el('loginPassword')?.value || '';
+  if(!email || !password){ alert('Please fill in all fields!'); return; }
   alert(`Welcome back! 🎉\nLogged in with: ${email}`);
   closeLogin();
-  // Reset form
-  document.getElementById("loginEmail").value = "";
-  document.getElementById("loginPassword").value = "";
 }
 
-/* SCROLL FUNCTIONS */
-function scrollToHome(){
-  document.getElementById("home").scrollIntoView({ behavior: "smooth" });
+function signUpUser(){
+  const name = el('loginName')?.value || '';
+  const email = el('loginEmail')?.value || '';
+  if(!name || !email){ alert('Please fill in required fields'); return; }
+  alert(`Thanks for signing up, ${name}! Please verify your email: ${email}`);
+  closeLogin();
 }
 
-function scrollToServices(){
-  document.getElementById("services").scrollIntoView({ behavior: "smooth" });
+// Scroll / navigation helpers: if element present, scroll; otherwise navigate to index with hash
+function scrollToHashOrPage(hash){
+  const id = hash.replace('#','');
+  const target = el(id);
+  if(target){ target.scrollIntoView({behavior:'smooth'}); }
+  else { window.location.href = 'index.html' + (hash||''); }
 }
 
-function scrollToBooking(){
-  document.getElementById("book").scrollIntoView({ behavior: "smooth" });
+function scrollToHome(){ scrollToHashOrPage('#home'); }
+function scrollToServices(){ window.location.href = 'services.html'; }
+function scrollToBooking(){ scrollToHashOrPage('#book'); }
+function scrollToAbout(){ window.location.href = 'about.html'; }
+function scrollToLogin(){ window.location.href = 'index.html#login'; }
+
+// Open login modal if URL has #login
+document.addEventListener('DOMContentLoaded', () => {
+  if(location.hash === '#login'){
+    // Only open modal on index page
+    openLogin();
+    isSignUp = false; showMode();
+  }
+
+  // highlight active nav link
+  const navLinks = document.querySelectorAll('nav a');
+  navLinks.forEach(a => {
+    if(a.getAttribute('href') === window.location.pathname.split('/').pop() || (a.getAttribute('href') === 'index.html' && window.location.pathname.endsWith('index.html')) ){
+      a.style.fontWeight = '700';
+    }
+  });
+  
+  // Client-side router: intercept internal nav clicks and load <main> from remote pages
+  document.body.addEventListener('click', async (ev) => {
+    const a = ev.target.closest('a');
+    if(!a) return;
+    const href = a.getAttribute('href');
+    if(!href || href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('#')) return;
+    // internal link - prevent full reload
+    ev.preventDefault();
+    await navigateTo(href);
+  });
+
+  window.addEventListener('popstate', (e) => {
+    navigateTo(location.pathname.split('/').pop() || 'index.html', {replace:true});
+  });
+});
+
+async function navigateTo(href, opts={replace:false}){
+  try{
+    const res = await fetch(href);
+    if(!res.ok) { window.location.href = href; return; }
+    const text = await res.text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(text, 'text/html');
+    const newMain = doc.querySelector('main');
+    if(newMain){
+      const curMain = document.querySelector('main');
+      if(curMain) curMain.replaceWith(newMain);
+      else document.body.appendChild(newMain);
+      if(!opts.replace) history.pushState({}, '', href);
+      // update document title if present
+      if(doc.title) document.title = doc.title;
+      // re-run scripts initialization for new content
+      if(typeof window.initWidgets === 'function') window.initWidgets();
+      return;
+    }
+    // fallback: go to url
+    window.location.href = href;
+  }catch(err){ console.error('navigate error', err); window.location.href = href; }
 }
 
-function scrollToAbout(){
-  document.getElementById("about").scrollIntoView({ behavior: "smooth" });
-}
-
-function scrollToLogin(){
-  scrollToBook();
-}
-/* END SCROLL FUNCTIONS */
+// Optional hook: re-init widgets after SPA navigation
+window.initWidgets = function(){
+  // re-run any initialization logic that depends on DOM presence
+  // e.g., re-bind forms
+};
+});
 
