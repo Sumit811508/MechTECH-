@@ -190,10 +190,12 @@ nav a:hover{ background:var(--accent); color:var(--primary-600); }
 }
 
 .booking form{
-  max-width:520px;
+  max-width:820px;
   margin:auto;
   display:grid;
   gap:18px;
+  grid-template-columns: repeat(2, 1fr);
+  align-items:start;
 }
 
 .booking select,
@@ -208,6 +210,12 @@ nav a:hover{ background:var(--accent); color:var(--primary-600); }
   background:linear-gradient(90deg,var(--primary),var(--primary-600));
   color:white;
   border:none;
+}
+
+.booking form > *:last-child{ grid-column: 1 / -1; }
+
+@media (max-width:900px){
+  .booking form{ grid-template-columns: 1fr; }
 }
 
 button:active{

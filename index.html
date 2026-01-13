@@ -73,6 +73,9 @@
   <h2>Book a Service</h2>
 
   <form id="bookingForm">
+    <input id="fullName" name="name" type="text" placeholder="Full name" required>
+    <input id="email" name="email" type="email" placeholder="Email" required>
+    <input id="phone" name="phone" type="text" placeholder="Phone (optional)">
     <select id="vehicleType" required >
       <option value="" hidden>Vehicle Type</option>
       <option value="Car">Car</option>
@@ -84,12 +87,20 @@
       <option value="Tractor">Tractor</option>
     </select>
 
-    <select id="brand" required>
+    <select id="serviceType" name="service_type">
+      <option value="">Service</option>
+      <option value="Breakdown Repair">Breakdown Repair</option>
+      <option value="Battery Jumpstart">Battery Jumpstart</option>
+      <option value="Towing">Towing</option>
+      <option value="Tyre Repair">Tyre Repair</option>
+    </select>
+
+    <select id="brand" name="brand" required>
       <option value="" >Brand</option>
 
     </select>
 
-    <select id="model" required>
+    <select id="model" name="model" required>
       <option value="" >Model</option>
 
     </select>
