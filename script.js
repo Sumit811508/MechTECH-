@@ -71,110 +71,140 @@ const modelData = {
 // --- Helpers ---
 function el(id){ return document.getElementById(id); }
 
-// Only attach behaviors if elements exist on the page
-const vehicleType = el('vehicleType');
-const brand = el('brand');
-const model = el('model');
-const bookingForm = el('bookingForm');
-const loginModal = el('loginModal');
-const contactForm = el('contactForm');
+// Centralized widget initializer — binds controls when present.
+window.initWidgets = function(){
+  const vehicleType = el('vehicleType');
+  const brand = el('brand');
+  const model = el('model');
+  const bookingForm = el('bookingForm');
+  const contactForm = el('contactForm');
+  const loginModal = el('loginModal');
 
-if(vehicleType && brand){
-  vehicleType.addEventListener('change', () => {
-    brand.innerHTML = "<option value=''>Brand</option>";
-    model && (model.innerHTML = "<option value=''>Model</option>");
-    (brandData[vehicleType.value] || []).forEach(b => brand.innerHTML += `<option>${b}</option>`);
-  });
+  if(vehicleType && brand && vehicleType.dataset.bound !== 'true'){
+    vehicleType.dataset.bound = 'true';
+    vehicleType.addEventListener('change', () => {
+      brand.innerHTML = "<option value=''>Brand</option>";
+      model && (model.innerHTML = "<option value=''>Model</option>");
+      (brandData[vehicleType.value] || []).forEach(b => brand.innerHTML += `<option>${b}</option>`);
+    });
+  }
 
-  brand.addEventListener('change', () => {
-    model && (model.innerHTML = "<option value=''>Model</option>");
-    (modelData[brand.value] || []).forEach(m => model && (model.innerHTML += `<option>${m}</option>`));
-  });
-}
+  if(brand && model && brand.dataset.bound !== 'true'){
+    brand.dataset.bound = 'true';
+    brand.addEventListener('change', () => {
+      model && (model.innerHTML = "<option value=''>Model</option>");
+      (modelData[brand.value] || []).forEach(m => model && (model.innerHTML += `<option>${m}</option>`));
+    });
+  }
 
-if(bookingForm){
-  bookingForm.addEventListener('submit', async e => {
-    e.preventDefault();
-    const formData = new FormData(bookingForm);
-    const payload = Object.fromEntries(formData.entries());
-    clearFieldErrors(bookingForm);
-    const submitBtn = bookingForm.querySelector('button[type="submit"]');
-    const origText = submitBtn.innerHTML;
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = 'Sending…';
-    showToast('info','Submitting booking...');
-    try{
-      const res = await fetch('/api/booking/', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
-      });
-      const data = await res.json().catch(()=>({}));
-      if(res.ok){
-        showToast('success','Booking submitted! Reference: ' + (data.id || 'n/a'));
-        showInlineSuccess(bookingForm, 'Booking submitted — ref: ' + (data.id || 'n/a'));
-        bookingForm.reset();
-        submitBtn.disabled = false; submitBtn.innerHTML = origText;
-        return;
+  if(bookingForm && bookingForm.dataset.bound !== 'true'){
+    bookingForm.dataset.bound = 'true';
+    bookingForm.addEventListener('submit', async e => {
+      e.preventDefault();
+      const formData = new FormData(bookingForm);
+      const payload = Object.fromEntries(formData.entries());
+      clearFieldErrors(bookingForm);
+      const submitBtn = bookingForm.querySelector('button[type="submit"]');
+      const origDisabled = submitBtn ? submitBtn.disabled : false;
+      if(submitBtn){ setButtonLoading(submitBtn); submitBtn.disabled = true; }
+      showToast('info','Submitting booking...');
+      try{
+        const res = await fetch('/api/booking/', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+        });
+        const data = await res.json().catch(()=>({}));
+        if(res.ok){
+          showToast('success','Booking submitted! Reference: ' + (data.id || 'n/a'));
+          showInlineSuccess(bookingForm, 'Booking submitted — ref: ' + (data.id || 'n/a'));
+          bookingForm.reset();
+          if(submitBtn){ clearButtonLoading(submitBtn, true); submitBtn.disabled = false; }
+          return;
+        }
+        if(data && data.error === 'validation' && data.fields){
+          showFieldErrors(bookingForm, data.fields);
+          showToast('error','Please fix form errors.');
+        } else if(data && data.error === 'rate_limited'){
+          showToast('error','Too many requests — please wait.');
+        } else {
+          showToast('error','Submission failed.');
+        }
+      }catch(err){
+        console.warn('Backend booking submit failed', err);
+        showToast('error','Network error — could not submit booking.');
+      } finally{
+        if(submitBtn){ clearButtonLoading(submitBtn, false); submitBtn.disabled = origDisabled; }
       }
-      if(data && data.error === 'validation' && data.fields){
-        showFieldErrors(bookingForm, data.fields);
-        showToast('error','Please fix form errors.');
-      } else if(data && data.error === 'rate_limited'){
-        showToast('error','Too many requests — please wait.');
-      } else {
-        showToast('error','Submission failed.');
-      }
-    }catch(err){
-      console.warn('Backend booking submit failed', err);
-      showToast('error','Network error — could not submit booking.');
-    } finally{
-      submitBtn.disabled = false; submitBtn.innerHTML = origText;
-    }
-  });
-}
+    });
+  }
 
-if(contactForm){
-  contactForm.addEventListener('submit', async e => {
-    e.preventDefault();
-    clearFieldErrors(contactForm);
-    const submitBtn = contactForm.querySelector('button[type="submit"]');
-    const origText = submitBtn.innerHTML;
-    submitBtn.disabled = true; submitBtn.innerHTML = 'Sending…';
-    showToast('info','Sending message...');
-    const formData = new FormData(contactForm);
-    const payload = Object.fromEntries(formData.entries());
-    try{
-      const res = await fetch('/api/contact/', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload) });
-      const data = await res.json().catch(()=>({}));
-      if(res.ok){
-        showToast('success','Thanks — we received your message.');
-        showInlineSuccess(contactForm,'Message sent — we will reply shortly.');
-        contactForm.reset();
-        submitBtn.disabled = false; submitBtn.innerHTML = origText;
-        return;
+  // realtime validation bindings
+  const emailEl = el('email');
+  const phoneEl = el('phone');
+  if(emailEl && emailEl.dataset.bound !== 'true'){
+    emailEl.dataset.bound = 'true';
+    emailEl.addEventListener('input', ()=>{
+      const err = emailEl.closest('.form-group')?.querySelector('.field-error');
+      if(!validateEmailVal(emailEl.value)) err && (err.textContent = 'Email looks invalid');
+      else err && (err.textContent = '');
+    });
+  }
+  if(phoneEl && phoneEl.dataset.bound !== 'true'){
+    phoneEl.dataset.bound = 'true';
+    phoneEl.addEventListener('input', ()=>{
+      const err = phoneEl.closest('.form-group')?.querySelector('.field-error');
+      if(!validatePhoneVal(phoneEl.value)) err && (err.textContent = 'Phone looks invalid');
+      else err && (err.textContent = '');
+    });
+  }
+
+  if(contactForm && contactForm.dataset.bound !== 'true'){
+    contactForm.dataset.bound = 'true';
+    contactForm.addEventListener('submit', async e => {
+      e.preventDefault();
+      clearFieldErrors(contactForm);
+      const submitBtn = contactForm.querySelector('button[type="submit"]');
+      const origDisabled = submitBtn ? submitBtn.disabled : false;
+      if(submitBtn){ setButtonLoading(submitBtn); submitBtn.disabled = true; }
+      showToast('info','Sending message...');
+      const formData = new FormData(contactForm);
+      const payload = Object.fromEntries(formData.entries());
+      try{
+        const res = await fetch('/api/contact/', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload) });
+        const data = await res.json().catch(()=>({}));
+        if(res.ok){
+          showToast('success','Thanks — we received your message.');
+          showInlineSuccess(contactForm,'Message sent — we will reply shortly.');
+          contactForm.reset();
+          if(submitBtn){ clearButtonLoading(submitBtn, true); submitBtn.disabled = false; }
+          return;
+        }
+        if(data && data.error === 'validation' && data.fields){
+          showFieldErrors(contactForm, data.fields);
+          showToast('error','Please fix the form errors.');
+        } else if(data && data.error === 'rate_limited'){
+          showToast('error','Too many requests — please wait.');
+        } else {
+          showToast('error','Submission failed.');
+        }
+      }catch(err){
+        console.warn('Contact submit failed', err);
+        showToast('error','Network error — could not send message.');
+      } finally{
+        if(submitBtn){ clearButtonLoading(submitBtn, false); submitBtn.disabled = origDisabled; }
       }
-      if(data && data.error === 'validation' && data.fields){
-        showFieldErrors(contactForm, data.fields);
-        showToast('error','Please fix the form errors.');
-      } else if(data && data.error === 'rate_limited'){
-        showToast('error','Too many requests — please wait.');
-      } else {
-        showToast('error','Submission failed.');
-      }
-    }catch(err){
-      console.warn('Contact submit failed', err);
-      showToast('error','Network error — could not send message.');
-    } finally{
-      submitBtn.disabled = false; submitBtn.innerHTML = origText;
-    }
-  });
-}
+    });
+  }
+  // expose loginModal to other helpers
+  window.__loginModal = loginModal;
+};
 
 // Login modal helpers (only when modal exists)
 let isSignUp = false;
-function openLogin(){ if(loginModal) loginModal.style.display = 'flex'; }
-function closeLogin(){ if(loginModal) loginModal.style.display = 'none'; }
+function openLogin(){ if(window.__loginModal) window.__loginModal.style.display = 'flex'; }
+function closeLogin(){ if(window.__loginModal) window.__loginModal.style.display = 'none'; }
 function toggleSignUp(){ isSignUp = !isSignUp; showMode(); }
 function showMode(){
+  const loginModal = window.__loginModal;
   if(!loginModal) return;
   const title = el('modalTitle');
   const name = el('loginName');
@@ -222,6 +252,56 @@ function scrollToHashOrPage(hash){
   else { window.location.href = 'index.html' + (hash||''); }
 }
 
+// Helper: show/hide button loading and success states
+function createSpinner(){
+  const s = document.createElement('span');
+  s.className = 'spinner';
+  return s;
+}
+
+function setButtonLoading(btn){
+  if(!btn) return;
+  btn.classList.add('loading');
+  // keep icon + text but prepend spinner
+  if(!btn.querySelector('.spinner')){
+    const sp = createSpinner();
+    btn.prepend(sp);
+  }
+}
+
+function clearButtonLoading(btn, success=false){
+  if(!btn) return;
+  btn.classList.remove('loading');
+  const sp = btn.querySelector('.spinner'); if(sp) sp.remove();
+  if(success){
+    btn.classList.add('success');
+    setTimeout(()=> btn.classList.remove('success'), 1600);
+  }
+}
+
+// Ripple effect for all .btn
+document.addEventListener('click', (ev) => {
+  const b = ev.target.closest('.btn');
+  if(!b) return;
+  const rect = b.getBoundingClientRect();
+  const r = document.createElement('span'); r.className = 'ripple';
+  const size = Math.max(rect.width, rect.height);
+  r.style.width = r.style.height = size + 'px';
+  r.style.left = (ev.clientX - rect.left - size/2) + 'px';
+  r.style.top = (ev.clientY - rect.top - size/2) + 'px';
+  b.appendChild(r);
+  setTimeout(()=> r.remove(), 700);
+});
+
+// Basic realtime validation helpers
+function validateEmailVal(v){
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+}
+function validatePhoneVal(v){
+  return v.trim() === '' || /^[0-9\+\-\s\(\)]{4,30}$/.test(v);
+}
+
+
 function scrollToHome(){ scrollToHashOrPage('#home'); }
 function scrollToServices(){ window.location.href = 'services.html'; }
 function scrollToBooking(){ scrollToHashOrPage('#book'); }
@@ -230,6 +310,9 @@ function scrollToLogin(){ window.location.href = 'index.html#login'; }
 
 // Open login modal if URL has #login
 document.addEventListener('DOMContentLoaded', () => {
+  // initialize widgets (forms, selects, etc.)
+  if(typeof window.initWidgets === 'function') window.initWidgets();
+
   if(location.hash === '#login'){
     // Only open modal on index page
     openLogin();
@@ -254,6 +337,13 @@ document.addEventListener('DOMContentLoaded', () => {
     ev.preventDefault();
     await navigateTo(href);
   });
+
+  // mobile nav toggle
+  const navToggle = document.querySelector('.nav-toggle');
+  const navLinks = document.querySelector('.nav-links');
+  if(navToggle && navLinks){
+    navToggle.addEventListener('click', ()=> navLinks.classList.toggle('show'));
+  }
 
   window.addEventListener('popstate', (e) => {
     navigateTo(location.pathname.split('/').pop() || 'index.html', {replace:true});
@@ -284,9 +374,5 @@ async function navigateTo(href, opts={replace:false}){
   }catch(err){ console.error('navigate error', err); window.location.href = href; }
 }
 
-// Optional hook: re-init widgets after SPA navigation
-window.initWidgets = function(){
-  // re-run any initialization logic that depends on DOM presence
-  // e.g., re-bind forms
-};
+// initWidgets is defined earlier and will be called after SPA navigation
 

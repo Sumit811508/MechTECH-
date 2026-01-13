@@ -5,6 +5,11 @@
   <title>MECHTech</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
@@ -19,8 +24,8 @@
     <img src="new_logo1.png" alt="mechtech logo">
     <span>MECHTech</span>
   </div>
-
-  <nav>
+  <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+  <nav class="nav-links">
     <a href="index.html">Home</a>
     <a href="services.html">Services</a>
     <a href="index.html#book">Booking</a>
@@ -41,7 +46,7 @@
       <br><br>
       Mechtech bridges the gap between you and nearby mechanics instantly.Whether you're stuck on the road or at the home ,get fast reliable, and proffesional vehicle assistance with just few taps.
     </p>
-    <button onclick="scrollToBook()">Book Service</button>
+    <button class="btn btn-primary realistic" onclick="scrollToBook()"><i class="fa-solid fa-phone-flip"></i><span>Book Service</span></button>
   </div>
 </section>
 
@@ -72,40 +77,76 @@
 <section id="book" class="booking">
   <h2>Book a Service</h2>
 
-  <form id="bookingForm">
-    <input id="fullName" name="name" type="text" placeholder="Full name" required>
-    <input id="email" name="email" type="email" placeholder="Email" required>
-    <input id="phone" name="phone" type="text" placeholder="Phone (optional)">
-    <select id="vehicleType" required >
-      <option value="" hidden>Vehicle Type</option>
-      <option value="Car">Car</option>
-      <option value="HybridCar" >Hybrid Car</option>
-      <option value="Bike">Bike</option>
-      <option value="CarEV">CarEV</option>
-      <option value="BikeEV">BikeEV</option>
-      <option value="Truck">Truck</option>
-      <option value="Tractor">Tractor</option>
-    </select>
+  <form id="bookingForm" class="booking-form">
+    <div class="form-row">
+      <div class="form-group floating">
+        <input id="fullName" name="name" class="form-control" type="text" placeholder="John Doe" required>
+        <label for="fullName">Full name</label>
+        <div class="field-error" data-for="name"></div>
+      </div>
 
-    <select id="serviceType" name="service_type">
-      <option value="">Service</option>
-      <option value="Breakdown Repair">Breakdown Repair</option>
-      <option value="Battery Jumpstart">Battery Jumpstart</option>
-      <option value="Towing">Towing</option>
-      <option value="Tyre Repair">Tyre Repair</option>
-    </select>
+      <div class="form-group floating">
+        <input id="email" name="email" class="form-control" type="email" placeholder="you@example.com" required>
+        <label for="email">Email</label>
+        <div class="field-error" data-for="email"></div>
+      </div>
+    </div>
 
-    <select id="brand" name="brand" required>
-      <option value="" >Brand</option>
+    <div class="form-row">
+      <div class="form-group floating">
+        <input id="phone" name="phone" class="form-control" type="text" placeholder="+91 98765 43210">
+        <label for="phone">Phone (optional)</label>
+        <div class="field-error" data-for="phone"></div>
+      </div>
 
-    </select>
+      <div class="form-group floating">
+        <select id="vehicleType" name="vehicleType" class="form-control" required>
+          <option value="" hidden>Choose vehicle</option>
+          <option value="Car">Car</option>
+          <option value="HybridCar">Hybrid Car</option>
+          <option value="Bike">Bike</option>
+          <option value="CarEV">Car EV</option>
+          <option value="BikeEV">Bike EV</option>
+          <option value="Truck">Truck</option>
+          <option value="Tractor">Tractor</option>
+        </select>
+        <label for="vehicleType">Vehicle Type</label>
+        <div class="field-error" data-for="vehicle"></div>
+      </div>
+    </div>
 
-    <select id="model" name="model" required>
-      <option value="" >Model</option>
+    <div class="form-row">
+      <div class="form-group floating">
+        <select id="serviceType" name="service_type" class="form-control">
+          <option value="">Select service</option>
+          <option value="Breakdown Repair">Breakdown Repair</option>
+          <option value="Battery Jumpstart">Battery Jumpstart</option>
+          <option value="Towing">Towing</option>
+          <option value="Tyre Repair">Tyre Repair</option>
+        </select>
+        <label for="serviceType">Service</label>
+      </div>
 
-    </select>
+      <div class="form-group floating">
+        <select id="brand" name="brand" class="form-control" required>
+          <option value="">Select brand</option>
+        </select>
+        <label for="brand">Brand</label>
+      </div>
+    </div>
 
-    <button type="submit">Confirm Booking</button>
+    <div class="form-row">
+      <div class="form-group floating" style="flex:1">
+        <select id="model" name="model" class="form-control" required>
+          <option value="">Select model</option>
+        </select>
+        <label for="model">Model</label>
+      </div>
+
+      <div class="form-group" style="flex:1;display:flex;align-items:flex-end;justify-content:flex-end;padding-left:12px;">
+        <button type="submit" class="btn btn-primary realistic"><i class="fa-solid fa-check"></i><span>Confirm Booking</span></button>
+      </div>
+    </div>
   </form>
 </section>
 
