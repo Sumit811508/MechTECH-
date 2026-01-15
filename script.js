@@ -10,59 +10,59 @@
 
 const modelData = {
   // Car Models
-  Maruti:["Swift","Baleno","Brezza","Dzire","Ertiga","Alto","WagonR","Celerio",],
-  Hyundai:["i20","Creta","Venue","Alcazar","Verna","Grand i10 Nios",],
+  Maruti:["Swift","Baleno","Brezza","Dzire","Ertiga","Alto","WagonR","Celerio"],
+  Hyundai:["i20","Creta","Venue","Alcazar","Verna","Grand i10 Nios"],
   Tata:["Nexon","Punch","Altroz","Harrier","Safari","Tiago"],
-  Mahindra:["Scorpio","XUV700","Thar","Bolero","XUV300",],
-  skoda:["Kushaq","Slavia","Octavia","Rapid",],
-  Toyota:["Innova Crysta","Fortuner","Glanza","Urban Cruiser",],
-  Ford:["EcoSport","Endeavour","Figo","Mustang",],
-  Volkswagen:["Polo","Vento","T-Roc","Taigun",],
-  Kia:["Seltos","Sonet","Carnival","Carens",],
+  Mahindra:["Scorpio","XUV700","Thar","Bolero","XUV300"],
+  skoda:["Kushaq","Slavia","Octavia","Rapid"],
+  Toyota:["Innova Crysta","Fortuner","Glanza","Urban Cruiser"],
+  Ford:["EcoSport","Endeavour","Figo","Mustang"],
+  Volkswagen:["Polo","Vento","T-Roc","Taigun"],
+  Kia:["Seltos","Sonet","Carnival","Carens"],
 
   // Bike Models
   Hero:["Splendor","HF Deluxe","Xtreme","Passion Pro","Super Splendor","PLEASURE+","Destiny"],
-  Bajaj:["Pulsar","Dominar","CT 100","Avenger","Platina","Discover","PULSOR NS200",],
-  honda:["CB Shine","Activa","Unicorn","CBR",],
-  TVS:["Apache","Jupiter","Ntorq","Sport",],
-  Yamaha:["FZ","R15","MT-15","FZ-S",],
-  Royal_Enfield:["Classic 350","Bullet 350","Himalayan","Interceptor 650",],
-  KTM:["Duke 200","RC 200","390 Duke","RC 390",],
+  Bajaj:["Pulsar","Dominar","CT 100","Avenger","Platina","Discover","PULSOR NS200"],
+  honda:["CB Shine","Activa","Unicorn","CBR"],
+  TVS:["Apache","Jupiter","Ntorq","Sport"],
+  Yamaha:["FZ","R15","MT-15","FZ-S"],
+  Royal_Enfield:["Classic 350","Bullet 350","Himalayan","Interceptor 650"],
+  KTM:["Duke 200","RC 200","390 Duke","RC 390"],
 
   // EV Car Models
-   TataEV:["Nexon EV","Tigor EV","Altroz EV",],
-   MG:["ZS EV","Hector EV","Marvel R EV",],
-   mahindra:["eKUV100","eXUV300","eVerito",],
-   hondaEV:["Honda e","Honda Jazz EV",],
-   HundaiEV:["Kona Electric","Ioniq 5","Ioniq Electric",],
-   VolvoEV:["XC40 Recharge","C40 Recharge",],
+  Tata_EV:["Nexon EV","Tigor EV","Altroz EV"],
+  MG:["ZS EV","Hector EV","Marvel R EV"],
+  mahindra:["eKUV100","eXUV300","eVerito"],
+  hond_EV:["Honda e","Honda Jazz EV"],
+  Hundai_EV:["Kona Electric","Ioniq 5","Ioniq Electric"],
+  Volvo_EV:["XC40 Recharge","C40 Recharge"],
 
-   //Bike EV Models
-    Hero_EV:["Optima HX","Photon HX","Zir","Nyx",],
-    Revolt:["RV400","RV300",],
-    Bounce:["Infinity E1","Infinity E2",],
-    Ola:["S1","S1 Pro","S1 Air",],
-    Ather:["450X","450 Plus","340",],
-    TVS_EV:["iQube","Creon","Apache RTR Electric",],
+  // Bike EV Models
+  Ola:["S1","S1 Pro","S1 Air"],
+  Ather:["450X","450 Plus","340"],
+  TVS:["iQube","Creon","Apache RTR Electric"],
+  Bounce:["Infinity E1","Infinity E2"],
+  Revolt:["RV400","RV300"],
+  Hero_EV:["Optima HX","Photon HX","Zir","Nyx"],
 
+  // Truck Models
+  TataTruck:["Signa","Prima","Ultra"],
+  Ashok_Leyland:["Captain","Ecomet","Dost"],
+  MahindraTruck:["Blazo","Furio","Jeeto"],
+  Eicher:["Pro 1049","Pro 1110","Pro 3015"],
 
-  //Truck Models
-    TataTruck:["Signa","Prima","Ultra",],
-    Ashok_Leyland:["Captain","Ecomet","Dost",],
-    MahindraTruck:["Blazo","Furio","Jeeto",], 
-    Eicher:["Pro 1049","Pro 1110","Pro 3015",], 
+  // Hybrid Car Models
+  Toyota_Hybrid:["Camry Hybrid","Vellfire Hybrid","Highlander Hybrid"],
+  Honda_Hybrid:["Accord Hybrid","CR-V Hybrid","City Hybrid"],
+  Ford_Hybrid:["Escape Hybrid","Explorer Hybrid","Fusion Hybrid"],
+  Hyundai_Hybrid:["Sonata Hybrid","Tucson Hybrid","Santa Fe Hybrid"],
+  Kia_Hybrid:["Sorento Hybrid","Sportage Hybrid","Niro Hybrid"],
+  Maruti_Hybrid:["Ciaz Hybrid","Eeco Hybrid","Ertiga Hybrid"],
 
-   //Hybrid Car Models
-    Toyota_Hybrid:["Camry Hybrid","Vellfire Hybrid","Highlander Hybrid",],
-    Honda_Hybrid:["Accord Hybrid","CR-V Hybrid","City Hybrid",],
-    Ford_Hybrid:["Escape Hybrid","Explorer Hybrid","Fusion Hybrid",],
-    Hyundai_Hybrid:["Sonata Hybrid","Tucson Hybrid","Santa Fe Hybrid",],
-    Kia_Hybrid:["Sorento Hybrid","Sportage Hybrid","Niro Hybrid",],
-    Maruti_Hybrid:["Ciaz Hybrid","Eeco Hybrid","Ertiga Hybrid",],
-     // Tractor Models
-   Mahindra:["Arjun","Jupiter","Yuvraj","Trakstar",],
-   Sonalika:["Sultan RX","Tiger DI","Powertrac Euro 50",],
- };
+  // Tractor Models
+  Mahindra:["Arjun","Jupiter","Yuvraj","Trakstar"],
+  Sonalika:["Sultan RX","Tiger DI","Powertrac Euro 50"]
+};
 
 // --- UI data ---
 
@@ -320,7 +320,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // highlight active nav link
-  const navLinks = document.querySelectorAll('nav a');
+  const_navLinks = document.querySelectorAll('nav a');
   navLinks.forEach(a => {
     if(a.getAttribute('href') === window.location.pathname.split('/').pop() || (a.getAttribute('href') === 'index.html' && window.location.pathname.endsWith('index.html')) ){
       a.style.fontWeight = '700';
