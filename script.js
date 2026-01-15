@@ -200,11 +200,17 @@ window.initWidgets = function(){
 
 // Login modal helpers (only when modal exists)
 let isSignUp = false;
-function openLogin(){ if(window.__loginModal) window.__loginModal.style.display = 'flex'; }
-function closeLogin(){ if(window.__loginModal) window.__loginModal.style.display = 'none'; }
+function openLogin(){ 
+  const modal = el('loginModal');
+  if(modal) modal.style.display = 'flex'; 
+}
+function closeLogin(){ 
+  const modal = el('loginModal');
+  if(modal) modal.style.display = 'none'; 
+}
 function toggleSignUp(){ isSignUp = !isSignUp; showMode(); }
 function showMode(){
-  const loginModal = window.__loginModal;
+  const loginModal = el('loginModal');
   if(!loginModal) return;
   const title = el('modalTitle');
   const name = el('loginName');
@@ -319,6 +325,14 @@ document.addEventListener('DOMContentLoaded', () => {
     isSignUp = false; showMode();
   }
 
+  // Listen for hash changes to open login modal
+  window.addEventListener('hashchange', () => {
+    if(location.hash === '#login'){
+      openLogin();
+      isSignUp = false; showMode();
+    }
+  });
+
   // highlight active nav link
   const_navLinks = document.querySelectorAll('nav a');
   navLinks.forEach(a => {
@@ -332,7 +346,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const a = ev.target.closest('a');
     if(!a) return;
     const href = a.getAttribute('href');
-    if(!href || href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('#')) return;
+    if(!href || href.startsWith('http') || href.startsWith('mailto:')) return;
+    
+    // Special handling for login link
+    if(href === '#login'){
+      ev.preventDefault();
+      // If not on index page, navigate to index first
+      if(!window.location.pathname.includes('index.html')){
+        await navigateTo('index.html', {replace:false});
+      }
+      // Always open login modal
+      openLogin();
+      isSignUp = false;
+      showMode();
+      return;
+    }
+    
+    // Skip other hash links
+    if(href.startsWith('#')) return;
+    
     // internal link - prevent full reload
     ev.preventDefault();
     await navigateTo(href);

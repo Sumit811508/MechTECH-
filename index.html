@@ -32,21 +32,63 @@
     <a href="products.html">Products</a>
     <a href="about.html">About</a>
     <a href="contact.html">Contact</a>
-    <a href="index.html#login">Login</a>
+    <a href="#" onclick="openLogin(); return false;">Login</a>
   </nav>
 </header>
 
 <!-- HERO -->
 <section id="home" class="hero">
-  <div class="hero-overlay"></div>
+  <video autoplay muted loop class="hero-video">
+    <source src="https://videos.pexels.com/video-files/7974881/7974881-sd_640_360_25fps.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <div class="hero-overlay">
+  </div>
   <div class="hero-content">
     <h2>On-Road Vehicle Assistance</h2>
     <p>
       Breakdown? Flat tyre? Battery issue?  
       <br><br>
-      Mechtech bridges the gap between you and nearby mechanics instantly.Whether you're stuck on the road or at the home ,get fast reliable, and proffesional vehicle assistance with just few taps.
+      MECHTech bridges the gap between you and nearby mechanics instantly. Whether you're stuck on the road or at home, get fast, reliable, and professional vehicle assistance with just a few taps.
     </p>
-    <button class="btn btn-primary realistic" onclick="scrollToBook()"><i class="fa-solid fa-phone-flip"></i><span>Book Service</span></button>
+    <button class="btn btn-primary realistic" onclick="scrollToBook()"><i class="fa-solid fa-phone-flip"></i><span>Book Service Now</span></button>
+  </div>
+</section>
+
+<!-- WHY MECHTECH -->
+<section id="why-mechtech" class="why-mechtech">
+  <div class="why-container">
+    <h2>Why Choose MECHTech?</h2>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon">
+          <i class="fa-solid fa-clock"></i>
+        </div>
+        <h3>10-Minute Response</h3>
+        <p>Average response time of just 10 minutes. Our mechanics are strategically located near you for faster assistance.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <h3>100% Verified</h3>
+        <p>Every mechanic on our platform is verified and background-checked. Your safety is our priority.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">
+          <i class="fa-solid fa-rupee-sign"></i>
+        </div>
+        <h3>Transparent Pricing</h3>
+        <p>Know the cost upfront. No hidden charges, no surprises. Fair pricing for quality service.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">
+          <i class="fa-solid fa-location-dot"></i>
+        </div>
+        <h3>Real-Time Tracking</h3>
+        <p>Track your mechanic's location in real-time with live ETA updates right on your screen.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -184,7 +226,7 @@
 
 <!-- FOOTER -->
 <footer>
-  <img src="assets/mechtech-logo.png" alt="MECHTech Logo">
+  <img src="new_logo1.png" style="border-radius: 8px;" alt="MECHTech Logo">
   <p>© 2026 MECHTech. All rights reserved.</p>
 </footer>
 
