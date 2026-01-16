@@ -28,7 +28,7 @@
   <nav class="nav-links">
     <a href="index.html">Home</a>
     <a href="services.html">Services</a>
-    <a href="index.html#book">Booking</a>
+    <a href="booking.html">Booking</a>
     <a href="products.html">Products</a>
     <a href="about.html">About</a>
     <a href="contact.html">Contact</a>
@@ -51,7 +51,7 @@
       <br><br>
       MECHTech bridges the gap between you and nearby mechanics instantly. Whether you're stuck on the road or at home, get fast, reliable, and professional vehicle assistance with just a few taps.
     </p>
-    <button class="btn btn-primary realistic" onclick="scrollToBook()"><i class="fa-solid fa-phone-flip"></i><span>Book Service Now</span></button>
+    <button class="btn btn-primary realistic" onclick="scrollToBooking()"><i class="fa-solid fa-phone-flip"></i><span>Book Service Now</span></button>
   </div>
 </section>
 
@@ -115,82 +115,7 @@
   </div>
 </section>
 
-<!-- BOOKING -->
-<section id="book" class="booking">
-  <h2>Book a Service</h2><br><br>
 
-  <form id="bookingForm" class="booking-form">
-    <div class="form-row" >
-      <div class="form-group floating">
-        
-        <input id="fullName" name="name" class="form-control" placeholder="John Doe" type="text"  required>
-        <label for="fullName">Full name</label>
-        <div class="field-error" data-for="name"></div>
-      </div>
-
-      <div class="form-group floating">
-        <input id="email" name="email" class="form-control" placeholder="demo@gmail.com" type="email"  required>
-        <label for="email">Email</label><br>
-        <div class="field-error" data-for="email"></div>
-      </div>
-    </div>
-
-      <div class="form-group floating" >
-        <input id="phone" name="phone" class="form-control" placeholder="9876543210" type="text" >
-        <label for="phone">Phone (optional)</label>
-        <div class="field-error" data-for="phone"></div>
-      </div>
-
-      <div class="form-group floating">
-        <select id="vehicleType" name="vehicleType" class="form-control" required>
-          <option value="" disabled>Choose vehicle</option>
-          <option value="Car">Car</option>
-          <option value="HybridCar">Hybrid Car</option>
-          <option value="Bike">Bike</option>
-          <option value="CarEV">Car EV</option>
-          <option value="BikeEV">Bike EV</option>
-          <option value="Truck">Truck</option>
-          <option value="Tractor">Tractor</option>
-        </select>
-        <label for="vehicleType">Vehicle Type</label>
-        <div class="field-error" data-for="vehicle"></div>
-      </div>
-    </div>
-
-    <div class="form-row">
-      <div class="form-group floating">
-        <select id="serviceType" name="service_type" class="form-control">
-          <option value="" disabled>Select service</option>
-          <option value="Breakdown Repair">Breakdown Repair</option>
-          <option value="Battery Jumpstart">Battery Jumpstart</option>
-          <option value="Towing">Towing</option>
-          <option value="Tyre Repair">Tyre Repair</option>
-        </select>
-        <label for="serviceType">Service</label>
-      </div>
-
-      <div class="form-group floating">
-        <select id="brand" name="brand" class="form-control" required>
-          <option value="" disabled>Select brand </option>
-        </select>
-        <label for="brand" >Brand</label>
-      </div>
-    </div>
-
-    <div class="form-row">
-      <div class="form-group floating" style="flex:1">
-        <select id="model" name="model" class="form-control" required>
-          <option value="" disabled>Select model</option>
-        </select>
-        <label for="model">Model</label>
-      </div>
-
-      <div class="form-group" style="flex:1;display:flex;align-items:flex-end;justify-content:flex-end;padding-left:12px;">
-        <button type="submit" class="btn btn-primary realistic"><i class="fa-solid fa-check"></i><span>Confirm Booking</span></button>
-      </div>
-    </div>
-  </form>
-</section>
 
 <!-- TRUST -->
 <section id="about" class="trust">

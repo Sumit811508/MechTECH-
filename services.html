@@ -19,7 +19,7 @@
   <nav class="nav-links">
     <a href="index.html">Home</a>
     <a href="services.html">Services</a>
-    <a href="index.html#book">Booking</a>
+    <a href="booking.html">Booking</a>
     <a href="products.html">Products</a>
     <a href="about.html">About</a>
     <a href="contact.html">Contact</a>
@@ -36,28 +36,28 @@
       <i class="fa-solid fa-car-burst"></i>
       <h3>Breakdown Repair</h3>
       <p>On-site diagnostics and repair to get you moving. Our expert mechanics can handle engine issues, electrical problems, and more right where you are.</p>
-      <p><a class="btn btn-primary realistic" href="index.html#book"><i class="fa-solid fa-car-burst breakdown-icon"></i><span>Breakdown Repairing</span></a></p>
+      <p><a class="btn btn-primary realistic" href="booking.html"><i class="fa-solid fa-car-burst breakdown-icon"></i><span>Breakdown Repairing</span></a></p>
     </div>
 
     <div class="service-card">
       <i class="fa-solid fa-car-battery"></i>
       <h3>Battery Jumpstart</h3>
       <p>Fast battery support and replacements. Dead battery? We'll jumpstart your car or provide a new battery installation on the spot.</p>
-      <p><a class="btn btn-primary realistic" href="index.html#book"><i class="fa-solid fa-battery-quarter"></i><span>Battery Support</span></a></p>
+      <p><a class="btn btn-primary realistic" href="booking.html"><i class="fa-solid fa-battery-quarter"></i><span>Battery Support</span></a></p>
     </div>
 
     <div class="service-card">
       <i class="fa-solid fa-truck"></i>
       <h3>Towing Service</h3>
       <p>Safe towing to your preferred garage or location. 24/7 heavy vehicle support with professional drivers and proper equipment.</p>
-      <p><a class="btn btn-primary realistic" href="index.html#book"><i class="fa-solid fa-truck-arrow-right"></i><span>Book Towing</span></a></p>
+      <p><a class="btn btn-primary realistic" href="booking.html"><i class="fa-solid fa-truck-arrow-right"></i><span>Book Towing</span></a></p>
     </div>
 
     <div class="service-card">
       <i class="fa-solid fa-screwdriver-wrench"></i>
       <h3>Tyre & Repair</h3>
       <p>Flat tyre fixes and roadside mechanical support. Puncture repair, tyre replacement, and quick fixes to get you back on road safely.</p>
-      <p><a class="btn btn-primary realistic" href="index.html#book"><i class="fa-solid fa-wrench"></i><span>Request Service</span></a></p>
+      <p><a class="btn btn-primary realistic" href="booking.html"><i class="fa-solid fa-wrench"></i><span>Request Service</span></a></p>
     </div>
   </div>
 
@@ -89,7 +89,7 @@
   </section>
 
     <div style="margin-top:30px;text-align:center;">
-    <a class="btn btn-primary realistic" href="index.html#book" style="text-decoration:none;"><i class="fa-solid fa-phone-flip"></i><span>Book a Service</span></a>
+    <a class="btn btn-primary realistic" href="booking.html" style="text-decoration:none;"><i class="fa-solid fa-phone-flip"></i><span>Book a Service</span></a>
   </div>
 </main>
 
@@ -97,6 +97,25 @@
   <img src="new_logo1.png" style="border-radius: 8px;" alt="MECHTech Logo">
   <p>© 2026 MECHTech. All rights reserved.</p>
 </footer>
+
+<!-- LOGIN MODAL -->
+<div class="modal" id="loginModal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeLogin()">×</span>
+    <h2 id="modalTitle">Login</h2>
+     <input id="loginName" type="text" placeholder="Full Name" style="display:none;">
+
+    <input id="loginEmail" type="email" placeholder="Email">
+
+    <input id="loginPassword" type="password" placeholder="Password">
+    <input id="loginConfirmPassword" type="password" placeholder="Confirm Password" style="display:none;">
+
+
+    <button id="submitBtn" onclick="loginUser()">Login</button>
+
+    <p id="toggleText" class="toggle-text">Don't have an account? <span onclick="toggleSignUp()" style="color:#2563eb; cursor:pointer; font-weight:600;">Sign Up</span></p>
+  </div>
+</div>
 
 <script src="script.js"></script>
 </body>

@@ -310,7 +310,7 @@ function validatePhoneVal(v){
 
 function scrollToHome(){ scrollToHashOrPage('#home'); }
 function scrollToServices(){ window.location.href = 'services.html'; }
-function scrollToBooking(){ scrollToHashOrPage('#book'); }
+function scrollToBooking(){ window.location.href = 'booking.html'; }
 function scrollToAbout(){ window.location.href = 'about.html'; }
 function scrollToLogin(){ window.location.href = 'index.html#login'; }
 

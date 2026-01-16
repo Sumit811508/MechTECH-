@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Book Service - MECHTech</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <div class="logo">
+    <img src="new_logo1.png" alt="mechtech logo">
+    <span>MECHTech</span>
+  </div>
+  <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+  <nav class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="booking.html">Booking</a>
+    <a href="products.html">Products</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="#" onclick="openLogin(); return false;">Login</a>
+  </nav>
+</header>
+
+<!-- BOOKING -->
+<section id="book" class="booking">
+  <h2>Book a Service</h2><br><br>
+
+  <form id="bookingForm" class="booking-form">
+    <div class="form-row" >
+      <div class="form-group floating">
+
+        <input id="fullName" name="name" class="form-control" placeholder="John Doe" type="text"  required>
+        <label for="fullName">Full name</label>
+        <div class="field-error" data-for="name"></div>
+      </div>
+
+      <div class="form-group floating">
+        <input id="email" name="email" class="form-control" placeholder="demo@gmail.com" type="email"  required>
+        <label for="email">Email</label><br>
+        <div class="field-error" data-for="email"></div>
+      </div>
+    </div>
+
+      <div class="form-group floating" >
+        <input id="phone" name="phone" class="form-control" placeholder="9876543210" type="text" >
+        <label for="phone">Phone (optional)</label>
+        <div class="field-error" data-for="phone"></div>
+      </div>
+
+      <div class="form-group floating">
+        <select id="vehicleType" name="vehicleType" class="form-control" required>
+          <option value="" disabled>Choose vehicle</option>
+          <option value="Car">Car</option>
+          <option value="HybridCar">Hybrid Car</option>
+          <option value="Bike">Bike</option>
+          <option value="CarEV">Car EV</option>
+          <option value="BikeEV">Bike EV</option>
+          <option value="Truck">Truck</option>
+          <option value="Tractor">Tractor</option>
+        </select>
+        <label for="vehicleType">Vehicle Type</label>
+        <div class="field-error" data-for="vehicle"></div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group floating">
+        <select id="serviceType" name="service_type" class="form-control">
+          <option value="" disabled>Select service</option>
+          <option value="Breakdown Repair">Breakdown Repair</option>
+          <option value="Battery Jumpstart">Battery Jumpstart</option>
+          <option value="Towing">Towing</option>
+          <option value="Tyre Repair">Tyre Repair</option>
+        </select>
+        <label for="serviceType">Service</label>
+      </div>
+
+      <div class="form-group floating">
+        <select id="brand" name="brand" class="form-control" required>
+          <option value="" disabled>Select brand </option>
+        </select>
+        <label for="brand" >Brand</label>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group floating" style="flex:1">
+        <select id="model" name="model" class="form-control" required>
+          <option value="" disabled>Select model</option>
+        </select>
+        <label for="model">Model</label>
+      </div>
+
+      <div class="form-group" style="flex:1;display:flex;align-items:flex-end;justify-content:flex-end;padding-left:12px;">
+        <button type="submit" class="btn btn-primary realistic"><i class="fa-solid fa-check"></i><span>Confirm Booking</span></button>
+      </div>
+    </div>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <img src="new_logo1.png" style="border-radius: 8px;" alt="MECHTech Logo">
+  <p>© 2026 MECHTech. All rights reserved.</p>
+</footer>
+
+<!-- LOGIN MODAL -->
+<div class="modal" id="loginModal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeLogin()">×</span>
+    <h2 id="modalTitle">Login</h2>
+     <input id="loginName" type="text" placeholder="Full Name" style="display:none;">
+
+    <input id="loginEmail" type="email" placeholder="Email">
+
+    <input id="loginPassword" type="password" placeholder="Password">
+    <input id="loginConfirmPassword" type="password" placeholder="Confirm Password" style="display:none;">
+
+
+    <button id="submitBtn" onclick="loginUser()">Login</button>
+
+    <p id="toggleText" class="toggle-text">Don't have an account? <span onclick="toggleSignUp()" style="color:#2563eb; cursor:pointer; font-weight:600;">Sign Up</span></p>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
