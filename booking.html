@@ -73,13 +73,13 @@
           <option value="Tractor">Tractor</option>
         </select>
         <label for="vehicleType">Vehicle Type</label>
-        <div class="field-error" data-for="vehicle"></div>
+        <div class="field-error" data-for="vehicleType"></div>
       </div>
     </div>
 
     <div class="form-row">
       <div class="form-group floating">
-        <select id="serviceType" name="service_type" class="form-control">
+        <select id="serviceType" name="service_type" class="form-control" required>
           <option value="" disabled>Select service</option>
           <option value="Breakdown Repair">Breakdown Repair</option>
           <option value="Battery Jumpstart">Battery Jumpstart</option>
@@ -87,6 +87,7 @@
           <option value="Tyre Repair">Tyre Repair</option>
         </select>
         <label for="serviceType">Service</label>
+        <div class="field-error" data-for="service_type"></div>
       </div>
 
       <div class="form-group floating">
@@ -94,6 +95,7 @@
           <option value="" disabled>Select brand </option>
         </select>
         <label for="brand" >Brand</label>
+        <div class="field-error" data-for="brand"></div>
       </div>
     </div>
 
@@ -103,6 +105,7 @@
           <option value="" disabled>Select model</option>
         </select>
         <label for="model">Model</label>
+        <div class="field-error" data-for="model"></div>
       </div>
 
       <div class="form-group" style="flex:1;display:flex;align-items:flex-end;justify-content:flex-end;padding-left:12px;">

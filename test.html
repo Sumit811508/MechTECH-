@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MECHTech - System Test</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container { 
+            max-width: 1000px; 
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+        }
+        h1 { 
+            color: #020617;
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+        .subtitle { 
+            color: #64748b;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .status-card {
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .status-card.success {
+            border-color: #10b981;
+            background: #f0fdf4;
+        }
+        .status-card.error {
+            border-color: #ef4444;
+            background: #fef2f2;
+        }
+        .status-card.loading {
+            border-color: #f59e0b;
+            background: #fffbeb;
+        }
+        .status-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        .status-title {
+            font-weight: 600;
+            color: #020617;
+            margin-bottom: 5px;
+        }
+        .status-text {
+            font-size: 14px;
+            color: #64748b;
+        }
+        .test-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+        }
+        .test-section h2 {
+            color: #020617;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+        .test-form {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #020617;
+            font-size: 14px;
+        }
+        .form-group input, .form-group select {
+            padding: 10px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+        .result-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            color: #020617;
+        }
+        .success-message {
+            color: #10b981;
+            font-weight: 600;
+        }
+        .error-message {
+            color: #ef4444;
+            font-weight: 600;
+        }
+        .links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+        .link-btn {
+            padding: 15px;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            text-decoration: none;
+            color: #667eea;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .link-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚗 MECHTech System Status</h1>
+        <p class="subtitle">Complete system verification and testing</p>
+
+        <div class="status-grid">
+            <div class="status-card" id="backendStatus">
+                <div class="status-icon">⏳</div>
+                <div class="status-title">Backend Server</div>
+                <div class="status-text">Checking...</div>
+            </div>
+            <div class="status-card" id="databaseStatus">
+                <div class="status-icon">⏳</div>
+                <div class="status-title">Database</div>
+                <div class="status-text">Checking...</div>
+            </div>
+            <div class="status-card" id="mechanicsStatus">
+                <div class="status-icon">⏳</div>
+                <div class="status-title">Mechanics Data</div>
+                <div class="status-text">Checking...</div>
+            </div>
+            <div class="status-card" id="frontendStatus">
+                <div class="status-icon">✅</div>
+                <div class="status-title">Frontend</div>
+                <div class="status-text">Ready</div>
+            </div>
+        </div>
+
+        <!-- Test Booking -->
+        <div class="test-section">
+            <h2>📅 Test Booking Submission</h2>
+            <form class="test-form" id="testBookingForm">
+                <div class="form-group">
+                    <label for="testName">Full Name</label>
+                    <input type="text" id="testName" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label for="testEmail">Email</label>
+                    <input type="email" id="testEmail" placeholder="john@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="testPhone">Phone</label>
+                    <input type="tel" id="testPhone" placeholder="+91 9876543210" required>
+                </div>
+                <div class="form-group">
+                    <label for="testVehicleType">Vehicle Type</label>
+                    <select id="testVehicleType" required>
+                        <option value="">Select Type</option>
+                        <option value="Car">Car</option>
+                        <option value="Bike">Bike</option>
+                        <option value="Truck">Truck</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="testVehicleBrand">Brand</label>
+                    <input type="text" id="testVehicleBrand" placeholder="Maruti" required>
+                </div>
+                <div class="form-group">
+                    <label for="testServiceType">Service Type</label>
+                    <select id="testServiceType" required>
+                        <option value="">Select Service</option>
+                        <option value="Flat Tyre">Flat Tyre</option>
+                        <option value="Battery">Battery</option>
+                        <option value="Engine">Engine</option>
+                        <option value="General Maintenance">General Maintenance</option>
+                    </select>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="submitTestBooking()">
+                    <i class="fas fa-paper-plane"></i> Submit Booking
+                </button>
+            </form>
+            <div class="result-box" id="bookingResult"></div>
+        </div>
+
+        <!-- Test Contact -->
+        <div class="test-section">
+            <h2>📧 Test Contact Submission</h2>
+            <form class="test-form" id="testContactForm">
+                <div class="form-group">
+                    <label for="contactName">Name</label>
+                    <input type="text" id="contactName" placeholder="Jane Smith" required>
+                </div>
+                <div class="form-group">
+                    <label for="contactEmail">Email</label>
+                    <input type="email" id="contactEmail" placeholder="jane@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="contactSubject">Subject</label>
+                    <input type="text" id="contactSubject" placeholder="General Inquiry" required>
+                </div>
+                <div class="form-group">
+                    <label for="contactMessage">Message</label>
+                    <textarea id="contactMessage" placeholder="Your message..." required style="padding: 10px; border: 1px solid #e2e8f0; border-radius: 6px; font-family: Inter; resize: vertical; height: 100px;"></textarea>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="submitTestContact()">
+                    <i class="fas fa-envelope"></i> Send Message
+                </button>
+            </form>
+            <div class="result-box" id="contactResult"></div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="test-section">
+            <h2>🔗 Quick Links</h2>
+            <div class="links">
+                <a href="index.html" class="link-btn">
+                    <i class="fas fa-home"></i> Go to Homepage
+                </a>
+                <a href="booking.html" class="link-btn">
+                    <i class="fas fa-calendar"></i> Booking Page
+                </a>
+                <a href="contact.html" class="link-btn">
+                    <i class="fas fa-envelope"></i> Contact Page
+                </a>
+                <a href="http://localhost:5000/api/mechanics" class="link-btn" target="_blank">
+                    <i class="fas fa-tools"></i> API: Mechanics
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:5000';
+
+        // Check status on page load
+        window.addEventListener('DOMContentLoaded', async () => {
+            await checkBackendStatus();
+            await checkDatabaseStatus();
+            await checkMechanicsData();
+        });
+
+        async function checkBackendStatus() {
+            try {
+                const response = await fetch(`${API_BASE}/health`);
+                const data = await response.json();
+                updateStatus('backendStatus', true, 'Connected');
+            } catch (error) {
+                updateStatus('backendStatus', false, 'Not Connected');
+            }
+        }
+
+        async function checkDatabaseStatus() {
+            try {
+                const response = await fetch(`${API_BASE}/api/booking`);
+                const data = await response.json();
+                updateStatus('databaseStatus', true, 'Initialized');
+            } catch (error) {
+                updateStatus('databaseStatus', false, 'Connection Failed');
+            }
+        }
+
+        async function checkMechanicsData() {
+            try {
+                const response = await fetch(`${API_BASE}/api/mechanics`);
+                const data = await response.json();
+                const count = Array.isArray(data) ? data.length : 0;
+                updateStatus('mechanicsStatus', true, `${count} mechanics`);
+            } catch (error) {
+                updateStatus('mechanicsStatus', false, 'Failed to load');
+            }
+        }
+
+        function updateStatus(elementId, success, text) {
+            const card = document.getElementById(elementId);
+            const icon = success ? '✅' : '❌';
+            const className = success ? 'success' : 'error';
+            card.className = `status-card ${className}`;
+            card.innerHTML = `
+                <div class="status-icon">${icon}</div>
+                <div class="status-title">${card.querySelector('.status-title').textContent}</div>
+                <div class="status-text">${text}</div>
+            `;
+        }
+
+        async function submitTestBooking() {
+            const result = document.getElementById('bookingResult');
+            result.innerHTML = '⏳ Submitting...';
+
+            const payload = {
+                name: document.getElementById('testName').value,
+                email: document.getElementById('testEmail').value,
+                phone: document.getElementById('testPhone').value,
+                vehicle_type: document.getElementById('testVehicleType').value,
+                vehicle_brand: document.getElementById('testVehicleBrand').value,
+                service_type: document.getElementById('testServiceType').value
+            };
+
+            try {
+                const response = await fetch(`${API_BASE}/api/booking/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+                
+                if (response.ok) {
+                    result.innerHTML = `<span class="success-message">✅ Booking Submitted!</span><br>Booking ID: ${data.id || 'N/A'}<br><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                } else {
+                    result.innerHTML = `<span class="error-message">❌ Error: ${data.error || 'Failed'}</span><br><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                }
+            } catch (error) {
+                result.innerHTML = `<span class="error-message">❌ Network Error: ${error.message}</span>`;
+            }
+        }
+
+        async function submitTestContact() {
+            const result = document.getElementById('contactResult');
+            result.innerHTML = '⏳ Sending...';
+
+            const payload = {
+                name: document.getElementById('contactName').value,
+                email: document.getElementById('contactEmail').value,
+                subject: document.getElementById('contactSubject').value,
+                message: document.getElementById('contactMessage').value
+            };
+
+            try {
+                const response = await fetch(`${API_BASE}/api/contact/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+                
+                if (response.ok) {
+                    result.innerHTML = `<span class="success-message">✅ Message Sent!</span><br>Contact ID: ${data.id || 'N/A'}<br><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                } else {
+                    result.innerHTML = `<span class="error-message">❌ Error: ${data.error || 'Failed'}</span><br><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                }
+            } catch (error) {
+                result.innerHTML = `<span class="error-message">❌ Network Error: ${error.message}</span>`;
+            }
+        }
+    </script>
+</body>
+</html>

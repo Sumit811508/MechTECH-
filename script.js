@@ -109,7 +109,7 @@ window.initWidgets = function(){
       if(submitBtn){ setButtonLoading(submitBtn); submitBtn.disabled = true; }
       showToast('info','Submitting booking...');
       try{
-        const res = await fetch('/api/booking/', {
+        const res = await fetch('http://localhost:5000/api/booking/', {
           method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
         });
         const data = await res.json().catch(()=>({}));
@@ -169,7 +169,7 @@ window.initWidgets = function(){
       const formData = new FormData(contactForm);
       const payload = Object.fromEntries(formData.entries());
       try{
-        const res = await fetch('/api/contact/', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload) });
+        const res = await fetch('http://localhost:5000/api/contact/', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload) });
         const data = await res.json().catch(()=>({}));
         if(res.ok){
           showToast('success','Thanks — we received your message.');
@@ -334,8 +334,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // highlight active nav link
-  const_navLinks = document.querySelectorAll('nav a');
-  navLinks.forEach(a => {
+  const navLinksElements = document.querySelectorAll('nav a');
+  navLinksElements.forEach(a => {
     if(a.getAttribute('href') === window.location.pathname.split('/').pop() || (a.getAttribute('href') === 'index.html' && window.location.pathname.endsWith('index.html')) ){
       a.style.fontWeight = '700';
     }
@@ -345,6 +345,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.body.addEventListener('click', async (ev) => {
     const a = ev.target.closest('a');
     if(!a) return;
+    const href = a.getAttribute('href');
     if(
   !href ||
   href.startsWith('http') ||
@@ -453,3 +454,16 @@ function showInlineSuccess(form, message) {
 }
 
 // initWidgets is defined earlier and will be called after SPA navigation
+// Initialize widgets on page load
+document.addEventListener('DOMContentLoaded', () => {
+  if(typeof window.initWidgets === 'function') window.initWidgets();
+});
+
+// Also call on immediate load in case DOM is already ready
+if(document.readyState === 'loading'){
+  document.addEventListener('DOMContentLoaded', () => {
+    if(typeof window.initWidgets === 'function') window.initWidgets();
+  });
+} else {
+  if(typeof window.initWidgets === 'function') window.initWidgets();
+}

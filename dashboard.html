@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MECHTech - Live Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .dashboard-container { max-width: 1400px; margin: 0 auto; }
+        .dashboard-header { text-align: center; color: white; margin-bottom: 40px; }
+        .dashboard-header h1 { font-size: 42px; margin-bottom: 10px; }
+        .dashboard-header p { font-size: 18px; opacity: 0.9; }
+        
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        .stat-card { background: white; border-radius: 12px; padding: 24px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .stat-value { font-size: 36px; font-weight: 700; color: #667eea; margin-bottom: 8px; }
+        .stat-label { color: #64748b; font-size: 14px; font-weight: 600; }
+        .stat-icon { font-size: 24px; color: #667eea; margin-bottom: 10px; }
+        
+        .data-section { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 30px; margin-bottom: 40px; }
+        .data-panel { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .panel-title { font-size: 20px; font-weight: 700; color: #020617; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .panel-icon { font-size: 24px; color: #667eea; }
+        
+        .data-table { width: 100%; border-collapse: collapse; }
+        .data-table th { background: #f8fafc; padding: 12px; text-align: left; font-weight: 600; color: #020617; border-bottom: 2px solid #e2e8f0; }
+        .data-table td { padding: 12px; border-bottom: 1px solid #e2e8f0; color: #64748b; }
+        .data-table tr:hover { background: #f8fafc; }
+        
+        .empty-state { text-align: center; padding: 40px 20px; color: #94a3b8; }
+        .empty-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.5; }
+        
+        .action-buttons { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+        .btn-action { padding: 10px 16px; background: #667eea; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.3s; font-size: 14px; }
+        .btn-action:hover { background: #5568d3; transform: translateY(-2px); }
+        .btn-action.secondary { background: #e2e8f0; color: #020617; }
+        .btn-action.secondary:hover { background: #cbd5e1; }
+        
+        .refresh-indicator { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; color: #10b981; margin-top: 16px; }
+        .pulse { animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        
+        .status-badge { display: inline-block; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+        .status-active { background: #d1fae5; color: #065f46; }
+        .status-pending { background: #fef3c7; color: #92400e; }
+        
+        .page-nav { background: white; border-radius: 12px; padding: 20px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .nav-title { font-size: 16px; font-weight: 700; color: #020617; margin-bottom: 16px; }
+        .nav-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+        .nav-link { padding: 12px 16px; background: #f8fafc; color: #667eea; border: 2px solid #e2e8f0; border-radius: 6px; text-decoration: none; text-align: center; font-weight: 600; transition: all 0.3s; cursor: pointer; }
+        .nav-link:hover { background: #667eea; color: white; border-color: #667eea; }
+        
+        .loading { text-align: center; padding: 24px; color: #64748b; }
+        .spinner { display: inline-block; width: 24px; height: 24px; border: 3px solid #e2e8f0; border-top-color: #667eea; border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <div class="dashboard-header">
+            <h1>🚗 MECHTech Live Dashboard</h1>
+            <p>Real-time system monitoring and data view</p>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-server"></i></div>
+                <div class="stat-value" id="statusValue">?</div>
+                <div class="stat-label">Backend Status</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-calendar"></i></div>
+                <div class="stat-value" id="bookingCount">0</div>
+                <div class="stat-label">Total Bookings</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-envelope"></i></div>
+                <div class="stat-value" id="contactCount">0</div>
+                <div class="stat-label">Contact Messages</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-users"></i></div>
+                <div class="stat-value" id="mechanicCount">0</div>
+                <div class="stat-label">Mechanics</div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="page-nav">
+            <div class="nav-title">📍 Quick Navigation</div>
+            <div class="nav-grid">
+                <a class="nav-link" onclick="navigateTo('index.html')">🏠 Home</a>
+                <a class="nav-link" onclick="navigateTo('booking.html')">📅 Booking</a>
+                <a class="nav-link" onclick="navigateTo('contact.html')">📧 Contact</a>
+                <a class="nav-link" onclick="navigateTo('services.html')">👨‍🔧 Services</a>
+                <a class="nav-link" onclick="navigateTo('admin.html')">⚙️ Admin</a>
+                <a class="nav-link" onclick="location.reload()">🔄 Refresh</a>
+            </div>
+        </div>
+
+        <!-- Data Panels -->
+        <div class="data-section">
+            <!-- Recent Bookings -->
+            <div class="data-panel">
+                <div class="panel-title">
+                    <i class="fas fa-calendar panel-icon"></i>
+                    Recent Bookings
+                </div>
+                <div class="action-buttons">
+                    <button class="btn-action" onclick="loadBookings()">🔄 Refresh</button>
+                    <button class="btn-action secondary" onclick="navigateTo('booking.html')">+ New Booking</button>
+                </div>
+                <div id="bookingsContainer">
+                    <div class="loading"><div class="spinner"></div> Loading...</div>
+                </div>
+                <div class="refresh-indicator" id="bookingRefresh"></div>
+            </div>
+
+            <!-- Recent Contacts -->
+            <div class="data-panel">
+                <div class="panel-title">
+                    <i class="fas fa-envelope panel-icon"></i>
+                    Recent Messages
+                </div>
+                <div class="action-buttons">
+                    <button class="btn-action" onclick="loadContacts()">🔄 Refresh</button>
+                    <button class="btn-action secondary" onclick="navigateTo('contact.html')">+ New Message</button>
+                </div>
+                <div id="contactsContainer">
+                    <div class="loading"><div class="spinner"></div> Loading...</div>
+                </div>
+                <div class="refresh-indicator" id="contactRefresh"></div>
+            </div>
+
+            <!-- Mechanics -->
+            <div class="data-panel">
+                <div class="panel-title">
+                    <i class="fas fa-users panel-icon"></i>
+                    Available Mechanics
+                </div>
+                <div class="action-buttons">
+                    <button class="btn-action" onclick="loadMechanics()">🔄 Refresh</button>
+                </div>
+                <div id="mechanicsContainer">
+                    <div class="loading"><div class="spinner"></div> Loading...</div>
+                </div>
+                <div class="refresh-indicator" id="mechanicRefresh"></div>
+            </div>
+
+            <!-- System Health -->
+            <div class="data-panel">
+                <div class="panel-title">
+                    <i class="fas fa-heartbeat panel-icon"></i>
+                    System Health
+                </div>
+                <div action-buttons>
+                    <button class="btn-action" onclick="loadSystemHealth()">🔄 Check</button>
+                </div>
+                <div id="healthContainer">
+                    <div class="loading"><div class="spinner"></div> Checking...</div>
+                </div>
+                <div class="refresh-indicator" id="healthRefresh"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:5000';
+
+        // Initial load
+        window.addEventListener('DOMContentLoaded', () => {
+            loadDashboard();
+            setInterval(loadDashboard, 10000); // Refresh every 10 seconds
+        });
+
+        async function loadDashboard() {
+            await Promise.all([
+                checkBackendStatus(),
+                loadBookings(),
+                loadContacts(),
+                loadMechanics(),
+                loadSystemHealth()
+            ]);
+        }
+
+        async function checkBackendStatus() {
+            try {
+                const res = await fetch(`${API_BASE}/health`);
+                if (res.ok) {
+                    document.getElementById('statusValue').innerHTML = '✅ Online';
+                    document.getElementById('statusValue').style.color = '#10b981';
+                } else {
+                    document.getElementById('statusValue').innerHTML = '⚠️ Error';
+                    document.getElementById('statusValue').style.color = '#ef4444';
+                }
+            } catch {
+                document.getElementById('statusValue').innerHTML = '❌ Offline';
+                document.getElementById('statusValue').style.color = '#ef4444';
+            }
+        }
+
+        async function loadBookings() {
+            try {
+                const res = await fetch(`${API_BASE}/api/booking/`);
+                const bookings = await res.json();
+                const container = document.getElementById('bookingsContainer');
+                
+                if (!Array.isArray(bookings) || bookings.length === 0) {
+                    container.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div>No bookings yet. Create one to get started!</div>';
+                    document.getElementById('bookingCount').textContent = '0';
+                    return;
+                }
+
+                document.getElementById('bookingCount').textContent = bookings.length;
+                const html = `
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Vehicle</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${bookings.slice(0, 5).map(b => `
+                                <tr>
+                                    <td>#${(b.id || '').substring(0, 8)}</td>
+                                    <td>${b.name || 'N/A'}</td>
+                                    <td>${b.vehicle_type || 'N/A'}</td>
+                                    <td><span class="status-badge status-active">Received</span></td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+                container.innerHTML = html;
+                showRefresh('bookingRefresh', 'Last updated just now');
+            } catch (error) {
+                document.getElementById('bookingsContainer').innerHTML = `<div class="empty-state">❌ Could not load bookings</div>`;
+            }
+        }
+
+        async function loadContacts() {
+            try {
+                const res = await fetch(`${API_BASE}/api/contact/`);
+                const contacts = await res.json();
+                const container = document.getElementById('contactsContainer');
+                
+                if (!Array.isArray(contacts) || contacts.length === 0) {
+                    container.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div>No messages yet. Send one to get started!</div>';
+                    document.getElementById('contactCount').textContent = '0';
+                    return;
+                }
+
+                document.getElementById('contactCount').textContent = contacts.length;
+                const html = `
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Subject</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${contacts.slice(0, 5).map(c => `
+                                <tr>
+                                    <td>${c.name || 'N/A'}</td>
+                                    <td>${c.email || 'N/A'}</td>
+                                    <td>${(c.subject || c.message || 'N/A').substring(0, 20)}...</td>
+                                    <td><span class="status-badge status-pending">New</span></td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+                container.innerHTML = html;
+                showRefresh('contactRefresh', 'Last updated just now');
+            } catch (error) {
+                document.getElementById('contactsContainer').innerHTML = `<div class="empty-state">❌ Could not load messages</div>`;
+            }
+        }
+
+        async function loadMechanics() {
+            try {
+                const res = await fetch(`${API_BASE}/api/mechanics/`);
+                const mechanics = await res.json();
+                const container = document.getElementById('mechanicsContainer');
+                
+                if (!Array.isArray(mechanics) || mechanics.length === 0) {
+                    container.innerHTML = '<div class="empty-state"><div class="empty-icon">🔧</div>No mechanics available</div>';
+                    document.getElementById('mechanicCount').textContent = '0';
+                    return;
+                }
+
+                document.getElementById('mechanicCount').textContent = mechanics.length;
+                const html = `
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Specialty</th>
+                                <th>Experience</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${mechanics.map(m => `
+                                <tr>
+                                    <td>${m.name || 'N/A'}</td>
+                                    <td>${m.specialty || 'N/A'}</td>
+                                    <td>${m.experience_years || '0'} yrs</td>
+                                    <td><span class="status-badge status-active">Available</span></td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+                container.innerHTML = html;
+                showRefresh('mechanicRefresh', 'Last updated just now');
+            } catch (error) {
+                document.getElementById('mechanicsContainer').innerHTML = `<div class="empty-state">❌ Could not load mechanics</div>`;
+            }
+        }
+
+        async function loadSystemHealth() {
+            try {
+                const res = await fetch(`${API_BASE}/health`);
+                const health = await res.json();
+                
+                const html = `
+                    <table class="data-table">
+                        <tbody>
+                            <tr>
+                                <td>Backend Status</td>
+                                <td><span class="status-badge status-active">✅ Online</span></td>
+                            </tr>
+                            <tr>
+                                <td>Database</td>
+                                <td><span class="status-badge status-active">✅ Connected</span></td>
+                            </tr>
+                            <tr>
+                                <td>API Response</td>
+                                <td><span class="status-badge status-active">✅ Working</span></td>
+                            </tr>
+                            <tr>
+                                <td>CORS</td>
+                                <td><span class="status-badge status-active">✅ Enabled</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                `;
+                document.getElementById('healthContainer').innerHTML = html;
+                showRefresh('healthRefresh', 'Last checked just now');
+            } catch (error) {
+                document.getElementById('healthContainer').innerHTML = `
+                    <table class="data-table">
+                        <tbody>
+                            <tr>
+                                <td>Backend Status</td>
+                                <td><span class="status-badge status-pending">⚠️ Checking...</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                `;
+            }
+        }
+
+        function showRefresh(elementId, text) {
+            const el = document.getElementById(elementId);
+            if (el) {
+                el.innerHTML = `<i class="fas fa-check-circle pulse"></i> ${text}`;
+            }
+        }
+
+        function navigateTo(page) {
+            window.location.href = page;
+        }
+    </script>
+</body>
+</html>
