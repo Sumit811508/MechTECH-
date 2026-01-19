@@ -26,13 +26,13 @@
   </div>
   <button class="nav-toggle" aria-label="Toggle menu">☰</button>
   <nav class="nav-links">
-    <a href="index.html">Home</a>
-    <a href="services.html">Services</a>
-    <a href="booking.html">Booking</a>
-    <a href="products.html">Products</a>
+    <a href="#home">Home</a>
+    <a href="#services">Services</a>
+    <a href="#booking">Booking</a>
+
     <a href="about.html">About</a>
     <a href="contact.html">Contact</a>
-    <a href="#" onclick="openLogin(); return false;">Login</a>
+    <a href="login.html">Login</a>
   </nav>
 </header>
 
@@ -101,21 +101,140 @@
     <div class="service-card">
       <i class="fa-solid fa-car-burst"></i>
       <h3>Breakdown Repair</h3>
+      <p>On-site diagnostics and repair to get you moving. Our expert mechanics can handle engine issues, electrical problems, and more right where you are.</p>
+      <p><a class="btn btn-primary realistic" href="#booking"><i class="fa-solid fa-car-burst breakdown-icon"></i><span>Breakdown Repairing</span></a></p>
     </div>
 
     <div class="service-card">
       <i class="fa-solid fa-car-battery"></i>
       <h3>Battery Jumpstart</h3>
+      <p>Fast battery support and replacements. Dead battery? We'll jumpstart your car or provide a new battery installation on the spot.</p>
+      <p><a class="btn btn-primary realistic" href="#booking"><i class="fa-solid fa-battery-quarter"></i><span>Battery Support</span></a></p>
     </div>
 
     <div class="service-card">
       <i class="fa-solid fa-truck"></i>
       <h3>Towing Service</h3>
+      <p>Safe towing to your preferred garage or location. 24/7 heavy vehicle support with professional drivers and proper equipment.</p>
+      <p><a class="btn btn-primary realistic" href="#booking"><i class="fa-solid fa-truck-arrow-right"></i><span>Book Towing</span></a></p>
     </div>
+
+    <div class="service-card">
+      <i class="fa-solid fa-screwdriver-wrench"></i>
+      <h3>Tyre & Repair</h3>
+      <p>Flat tyre fixes and roadside mechanical support. Puncture repair, tyre replacement, and quick fixes to get you back on road safely.</p>
+      <p><a class="btn btn-primary realistic" href="#booking"><i class="fa-solid fa-wrench"></i><span>Request Service</span></a></p>
+    </div>
+  </div>
+
+  <!-- HOW OUR SERVICE WORKS -->
+  <section class="how-works">
+    <h2>How Our Service Works</h2>
+    <div class="works-steps">
+      <div class="work-step">
+        <div class="step-num">1</div>
+        <h4>Register</h4>
+        <p>Register on MECHTech website and create your account in seconds. Add your vehicle details and emergency contacts.</p>
+      </div>
+      <div class="work-step">
+        <div class="step-num">2</div>
+        <h4>Request Service</h4>
+        <p>Tell us your issue and location. Choose from available mechanics with ratings and pricing clearly displayed.</p>
+      </div>
+      <div class="work-step">
+        <div class="step-num">3</div>
+        <h4>Mechanic Arrives</h4>
+        <p>Track your mechanic's arrival in real-time. They'll arrive equipped with tools and spare parts.</p>
+      </div>
+      <div class="work-step">
+        <div class="step-num">4</div>
+        <h4>Problem Solved</h4>
+        <p>Get your vehicle fixed on-site or arrange for towing. Rate and review your experience instantly.</p>
+      </div>
+    </div>
+  </section>
+
+    <div style="margin-top:30px;text-align:center;">
+    <a class="btn btn-primary realistic" href="#booking" style="text-decoration:none;"><i class="fa-solid fa-phone-flip"></i><span>Book a Service</span></a>
   </div>
 </section>
 
+<!-- BOOKING -->
+<section id="booking" class="booking">
+  <h2>Book a Service</h2><br><br>
 
+  <form id="bookingForm" class="booking-form">
+    <div class="form-row" >
+      <div class="form-group floating">
+
+        <input id="fullName" name="name" class="form-control" placeholder="John Doe" type="text"  required>
+        <label for="fullName">Full name</label>
+        <div class="field-error" data-for="name"></div>
+      </div>
+
+      <div class="form-group floating">
+        <input id="email" name="email" class="form-control" placeholder="demo@gmail.com" type="email"  required>
+        <label for="email">Email</label><br>
+        <div class="field-error" data-for="email"></div>
+      </div>
+    </div>
+
+      <div class="form-group floating" >
+        <input id="phone" name="phone" class="form-control" placeholder="9876543210" type="text" >
+        <label for="phone">Phone (optional)</label>
+        <div class="field-error" data-for="phone"></div>
+      </div>
+
+      <div class="form-group floating">
+        <select id="vehicleType" name="vehicleType" class="form-control" required>
+          <option value="" disabled>Choose vehicle</option>
+          <option value="Car">Car</option>
+          <option value="HybridCar">Hybrid Car</option>
+          <option value="Bike">Bike</option>
+          <option value="CarEV">Car EV</option>
+          <option value="BikeEV">Bike EV</option>
+          <option value="Truck">Truck</option>
+          <option value="Tractor">Tractor</option>
+        </select>
+        <label for="vehicleType">Vehicle Type</label>
+        <div class="field-error" data-for="vehicle"></div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group floating">
+        <select id="serviceType" name="service_type" class="form-control">
+          <option value="" disabled>Select service</option>
+          <option value="Breakdown Repair">Breakdown Repair</option>
+          <option value="Battery Jumpstart">Battery Jumpstart</option>
+          <option value="Towing">Towing</option>
+          <option value="Tyre Repair">Tyre Repair</option>
+        </select>
+        <label for="serviceType">Service</label>
+      </div>
+
+      <div class="form-group floating">
+        <select id="brand" name="brand" class="form-control" required>
+          <option value="" disabled>Select brand </option>
+        </select>
+        <label for="brand" >Brand</label>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group floating" style="flex:1">
+        <select id="model" name="model" class="form-control" required>
+          <option value="" disabled>Select model</option>
+        </select>
+        <label for="model">Model</label>
+      </div>
+
+      <div class="form-group" style="flex:1;display:flex;align-items:flex-end;justify-content:flex-end;padding-left:12px;">
+        <button type="submit" class="btn btn-primary realistic"><i class="fa-solid fa-check"></i><span>Confirm Booking</span></button>
+      </div>
+    </div>
+  </form>
+</section>
 
 <!-- TRUST -->
 <section id="about" class="trust">
@@ -155,24 +274,7 @@
   <p>© 2026 MECHTech. All rights reserved.</p>
 </footer>
 
-<!-- LOGIN MODAL -->
-<div class="modal" id="loginModal">
-  <div class="modal-content">
-    <span class="close-btn" onclick="closeLogin()">×</span>
-    <h2 id="modalTitle">Login</h2>
-     <input id="loginName" type="text" placeholder="Full Name" style="display:none;">
-    
-    <input id="loginEmail" type="email" placeholder="Email">
-    
-    <input id="loginPassword" type="password" placeholder="Password">
-    <input id="loginConfirmPassword" type="password" placeholder="Confirm Password" style="display:none;">
-   
-    
-    <button id="submitBtn" onclick="loginUser()">Login</button>
-    
-    <p id="toggleText" class="toggle-text">Don't have an account? <span onclick="toggleSignUp()" style="color:#2563eb; cursor:pointer; font-weight:600;">Sign Up</span></p>
-  </div>
-</div>
+
 
 <script src="script.js"></script>
 </body>

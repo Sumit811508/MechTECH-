@@ -24,6 +24,7 @@ body{
   background:var(--bg);
   color:var(--text);
   position:relative;
+  margin-top:90px;
 }
 
 /* ================= NAVBAR ================= */
@@ -35,6 +36,11 @@ body{
   background:var(--surface);
   box-shadow:0 10px 30px rgba(166, 94, 20, 0.08);
   border-bottom:1px solid rgba(184, 103, 10, 0.06);
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:1000;
 }
 
 .logo{
@@ -240,7 +246,7 @@ div.hero-overlay {
 
 /* ================= SERVICES ================= */
 .services{
-  padding:70px 80px;
+  padding:90px 80px;
   background:white;
   text-align:center;
   animation: sectionFade 0.9s ease forwards;
@@ -352,7 +358,7 @@ div.hero-overlay {
 
 /* ================= BOOKING ================= */
 .booking{
-  padding:70px 60px;
+  padding:90px 60px;
   background:linear-gradient(180deg,var(--surface), #fff9f4);
   text-align:center;
   

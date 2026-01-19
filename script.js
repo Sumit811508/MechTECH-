@@ -30,11 +30,11 @@ const modelData = {
   KTM:["Duke 200","RC 200","390 Duke","RC 390"],
 
   // EV Car Models
-  Tata_EV:["Nexon EV","Tigor EV","Altroz EV"],
+  Tata:["Nexon EV","Tigor EV","Altroz EV"],
   MG:["ZS EV","Hector EV","Marvel R EV"],
   mahindra:["eKUV100","eXUV300","eVerito"],
-  hond_EV:["Honda e","Honda Jazz EV"],
-  Hundai_EV:["Kona Electric","Ioniq 5","Ioniq Electric"],
+  hond:["Honda e","Honda Jazz EV"],
+  Hundai:["Kona Electric","Ioniq 5","Ioniq Electric"],
   Volvo_EV:["XC40 Recharge","C40 Recharge"],
 
   // Bike EV Models
@@ -345,9 +345,16 @@ document.addEventListener('DOMContentLoaded', () => {
   document.body.addEventListener('click', async (ev) => {
     const a = ev.target.closest('a');
     if(!a) return;
-    const href = a.getAttribute('href');
-    if(!href || href.startsWith('http') || href.startsWith('mailto:')) return;
-    
+    if(
+  !href ||
+  href.startsWith('http') ||
+  href.startsWith('mailto:') ||
+  href.includes('contact.html') ||
+  href.includes('login.html')
+){
+  return; // allow normal browser navigation
+}
+
     // Special handling for login link
     if(href === '#login'){
       ev.preventDefault();

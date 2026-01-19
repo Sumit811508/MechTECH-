@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Sign Up - MECHTech</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #f5f3f0 0%, #fff8f5 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      padding-top: 10px;
+    }
+
+    .login-container {
+      width: 100%;
+      max-width: 420px;
+
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .login-header h1 {
+      font-size: 32px;
+      color: #020617;
+      margin-bottom: 8px;
+    }
+
+    .login-header p {
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    .login-form {
+      background: #ffffff;
+      padding: 40px;
+      border-radius: 18px;
+      box-shadow: 0 30px 70px rgba(0,0,0,0.08);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 500;
+      color: #020617;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(166,94,20,0.08);
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(249,207,125,0.18);
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(90deg, var(--primary), var(--primary-600));
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 24px;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(166,94,20,0.25);
+    }
+
+    .login-footer {
+      text-align: center;
+      margin-top: 20px;
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    .login-footer a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .login-footer a:hover {
+      text-decoration: underline;
+    }
+
+    .logo-section {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .logo-section img {
+      height: 40px;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    .logo-section span {
+      font-size: 24px;
+      font-weight: 700;
+      color: #020617;
+    }
+
+    .footer-icon {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 40px;
+      background: #020617;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+    }
+
+    .signup-btn {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .signup-btn:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR (Fixed Header) -->
+<header class="navbar">
+  <div class="logo">
+    <img src="new_logo1.png" alt="mechtech logo">
+    <span>MECHTech</span>
+  </div>
+  <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+  <nav class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="booking.html">Booking</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="login.html">Login</a>
+  </nav>
+</header>
+
+   <!-- SIGNUP CONTAINER -->
+<div class="login-container">
+  <div class="login-header">
+    <h1>Sign Up</h1>
+    <p>Create your MECHTech account</p>
+  </div>
+
+  <form class="login-form" id="signupForm">
+    <div class="form-group">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="your@email.com" required>
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Contact Number</label>
+      <input type="tel" id="phone" name="phone" placeholder="Enter your contact number" required>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" placeholder="Enter your password" required>
+    </div>
+
+    <div class="form-group">
+      <label for="confirmPassword">Confirm Password</label>
+      <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
+    </div>
+
+    <button type="submit" class="login-btn">Sign Up</button>
+
+    <div class="login-footer">
+      Already have an account? <a href="login.html">Login</a>
+    </div>
+  </form>
+</div>
+
+  <!-- FOOTER ICON  -->
+<div class="footer-icon">
+  <i class="fas fa-lightning-bolt"></i>
+</div>
+
+<script src="script.js"></script>
+<script>
+  // Handle form submission
+  document.getElementById('signupForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    // Sign up validation
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+
+    if (!name || !email || !phone || !password || !confirmPassword) {
+      alert('Please fill in all fields');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
+
+    // For now, just show a success message
+    alert('Sign up successful! Welcome to MECHTech');
+    // In a real app, you would send this to your backend
+
+    // Reset form
+    this.reset();
+  });
+</script>
+</body>
+</html>

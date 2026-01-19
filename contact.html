@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Contact - MECHTech</title>
+  <title>Contact Us - MECHTech</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
 
@@ -19,39 +20,75 @@
     <a href="index.html">Home</a>
     <a href="services.html">Services</a>
     <a href="booking.html">Booking</a>
-    <a href="products.html">Products</a>
     <a href="about.html">About</a>
     <a href="contact.html">Contact</a>
-    <a href="#" onclick="openLogin(); return false;">Login</a>
+    <a href="login.html">Login</a>
   </nav>
 </header>
 
-<main style="padding:90px 60px;">
-  <h2>Contact Us</h2>
-  <p class="subtitle">Questions? Feedback? We're here to help.</p>
+<main style="padding-top: 60px; padding-bottom: 40px;">
+  <!-- CONTACT HEADER -->
+  <section style="text-align: center; margin-bottom: 50px; background: linear-gradient(135deg, #f5f3f0 0%, #fff8f5 100%); padding: 60px 20px; border-radius: 16px;">
+    <h1 style="font-size: 42px; margin-bottom: 12px; color: #020617;">Contact Us</h1>
+    <p style="font-size: 18px; color: #64748b; max-width: 600px; margin: 0 auto;">Questions? Feedback? We're here to help.</p>
+  </section>
 
-  <div class="contact-grid">
+  <!-- CONTACT GRID -->
+  <div class="contact-grid" style="padding: 0 20px;">
+    <!-- LEFT: Contact Information -->
     <div class="contact-card">
-      <h3>We're here to help</h3>
-      <p>Reach out for support, partnership, or media inquiries. Our team typically responds within 24 hours.</p>
+      <h2 style="font-size: 24px; margin-bottom: 28px; color: #020617;">We're here to help</h2>
+      <p style="color: #64748b; margin-bottom: 28px; line-height: 1.6;">
+        Reach out for support, partnership, or media inquiries. Our team typically responds within 24 hours.
+      </p>
 
-      <ul style="margin-top:18px;list-style:none;padding:0;color:#5b3a2a;">
-        <li><strong>Email:</strong> support@mechtech.example</li>
-        <li style="margin-top:8px;"><strong>Phone:</strong> +1 555 123 456</li>
-        <li style="margin-top:8px;"><strong>Office:</strong> 123 Mech St, Industrial Park</li>
-      </ul>
+      <div style="margin-bottom: 24px;">
+        <h3 style="font-size: 16px; font-weight: 600; color: #020617; margin-bottom: 8px;">
+          <i class="fas fa-envelope" style="color: var(--primary); margin-right: 10px;"></i>Email
+        </h3>
+        <p style="color: #64748b; margin-left: 28px;">support@mechtech.example</p>
+      </div>
+
+      <div style="margin-bottom: 24px;">
+        <h3 style="font-size: 16px; font-weight: 600; color: #020617; margin-bottom: 8px;">
+          <i class="fas fa-phone" style="color: var(--primary); margin-right: 10px;"></i>Phone
+        </h3>
+        <p style="color: #64748b; margin-left: 28px;">+1 555 123 456</p>
+      </div>
+
+      <div style="margin-bottom: 24px;">
+        <h3 style="font-size: 16px; font-weight: 600; color: #020617; margin-bottom: 8px;">
+          <i class="fas fa-map-marker-alt" style="color: var(--primary); margin-right: 10px;"></i>Office
+        </h3>
+        <p style="color: #64748b; margin-left: 28px;">123 Mech St, Industrial Park</p>
+      </div>
     </div>
 
-    <div class="contact-card contact-form">
-      <form id="contactForm" class="contact-form" style="display:grid;gap:12px;">
-        <input id="contactName" type="text" placeholder="Full name" required>
-        <input id="contactEmail" type="email" placeholder="Email" required>
-        <textarea id="contactMessage" rows="6" placeholder="Your message" required></textarea>
-        <button type="submit">Send Message</button>
-      </form>
-    </div>
+    <!-- RIGHT: Contact Form -->
+    <form id="contactForm" class="contact-card" style="background: var(--card); padding: 28px; border-radius: 14px; box-shadow: 0 12px 30px rgba(166,94,20,0.06);">
+      <div style="margin-bottom: 20px;">
+        <label style="display: block; font-weight: 500; margin-bottom: 8px; color: #020617;">Full name</label>
+        <input type="text" name="fullName" placeholder="Your full name" required style="width: 100%; padding: 14px; border-radius: 10px; border: 1px solid rgba(166,94,20,0.08); font-size: 14px;">
+        <div class="field-error"></div>
+      </div>
+
+      <div style="margin-bottom: 20px;">
+        <label style="display: block; font-weight: 500; margin-bottom: 8px; color: #020617;">Email</label>
+        <input type="email" name="email" placeholder="your@email.com" required style="width: 100%; padding: 14px; border-radius: 10px; border: 1px solid rgba(166,94,20,0.08); font-size: 14px;">
+        <div class="field-error"></div>
+      </div>
+
+      <div style="margin-bottom: 20px;">
+        <label style="display: block; font-weight: 500; margin-bottom: 8px; color: #020617;">Your message</label>
+        <textarea name="message" placeholder="Tell us how we can help..." required style="width: 100%; padding: 14px; border-radius: 10px; border: 1px solid rgba(166,94,20,0.08); font-size: 14px; min-height: 140px; resize: vertical;"></textarea>
+        <div class="field-error"></div>
+      </div>
+
+      <button type="submit" style="width: 100%; padding: 12px; border-radius: 12px; background: linear-gradient(90deg, var(--primary), var(--primary-600)); color: #fff; border: none; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+        Send Message
+      </button>
+    </form>
   </div>
-
 </main>
 
 <footer>
@@ -64,16 +101,11 @@
   <div class="modal-content">
     <span class="close-btn" onclick="closeLogin()">×</span>
     <h2 id="modalTitle">Login</h2>
-     <input id="loginName" type="text" placeholder="Full Name" style="display:none;">
-
+    <input id="loginName" type="text" placeholder="Full Name" style="display:none;">
     <input id="loginEmail" type="email" placeholder="Email">
-
     <input id="loginPassword" type="password" placeholder="Password">
     <input id="loginConfirmPassword" type="password" placeholder="Confirm Password" style="display:none;">
-
-
     <button id="submitBtn" onclick="loginUser()">Login</button>
-
     <p id="toggleText" class="toggle-text">Don't have an account? <span onclick="toggleSignUp()" style="color:#2563eb; cursor:pointer; font-weight:600;">Sign Up</span></p>
   </div>
 </div>
