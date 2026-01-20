@@ -442,7 +442,7 @@
 
         async function loadAllBookings() {
             try {
-                const res = await fetch(`${API_BASE}/api/booking/`);
+                const res = await fetch(`${API_BASE}/api/booking`);
                 const bookings = await res.json();
                 renderAllBookings(bookings);
             } catch (error) {

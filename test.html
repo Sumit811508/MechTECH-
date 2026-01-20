@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -324,7 +324,7 @@
             try {
                 const response = await fetch(`${API_BASE}/api/mechanics`);
                 const data = await response.json();
-                const count = Array.isArray(data) ? data.length : 0;
+                const count = data.mechanics ? data.mechanics.length : 0;
                 updateStatus('mechanicsStatus', true, `${count} mechanics`);
             } catch (error) {
                 updateStatus('mechanicsStatus', false, 'Failed to load');
@@ -351,13 +351,14 @@
                 name: document.getElementById('testName').value,
                 email: document.getElementById('testEmail').value,
                 phone: document.getElementById('testPhone').value,
-                vehicle_type: document.getElementById('testVehicleType').value,
-                vehicle_brand: document.getElementById('testVehicleBrand').value,
+                vehicleType: document.getElementById('testVehicleType').value,
+                brand: document.getElementById('testVehicleBrand').value,
+                model: 'Test Model',
                 service_type: document.getElementById('testServiceType').value
             };
 
             try {
-                const response = await fetch(`${API_BASE}/api/booking/`, {
+                const response = await fetch(`${API_BASE}/api/booking`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
@@ -387,7 +388,7 @@
             };
 
             try {
-                const response = await fetch(`${API_BASE}/api/contact/`, {
+                const response = await fetch(`${API_BASE}/api/contact`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)

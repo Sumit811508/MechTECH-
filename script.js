@@ -109,7 +109,7 @@ window.initWidgets = function(){
       if(submitBtn){ setButtonLoading(submitBtn); submitBtn.disabled = true; }
       showToast('info','Submitting booking...');
       try{
-        const res = await fetch('http://localhost:5000/api/booking/', {
+        const res = await fetch('http://localhost:5000/api/booking', {
           method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
         });
         const data = await res.json().catch(()=>({}));
@@ -169,7 +169,7 @@ window.initWidgets = function(){
       const formData = new FormData(contactForm);
       const payload = Object.fromEntries(formData.entries());
       try{
-        const res = await fetch('http://localhost:5000/api/contact/', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload) });
+        const res = await fetch('http://localhost:5000/api/contact', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload) });
         const data = await res.json().catch(()=>({}));
         if(res.ok){
           showToast('success','Thanks — we received your message.');
