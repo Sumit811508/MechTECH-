@@ -292,20 +292,20 @@ def submit_contact():
         data = request.get_json()
         
         errors = {}
-        if not data.get('fullName'):
-            errors['fullName'] = 'Name is required'
+        if not data.get('name'):
+            errors['name'] = 'Name is required'
         if not data.get('email'):
             errors['email'] = 'Email is required'
         if not data.get('message') or len(data.get('message', '')) < 10:
             errors['message'] = 'Message must be at least 10 characters'
-        
+
         if errors:
             return jsonify({'error': 'validation', 'fields': errors}), 400
-        
+
         conn = get_db()
         c = conn.cursor()
         c.execute('INSERT INTO contact_messages (fullName, email, message, status) VALUES (?, ?, ?, ?)',
-                  (data['fullName'], data['email'], data['message'], 'unread'))
+                  (data['name'], data['email'], data['message'], 'unread'))
         conn.commit()
         msg_id = c.lastrowid
         conn.close()
